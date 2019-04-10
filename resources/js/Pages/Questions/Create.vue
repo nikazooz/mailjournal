@@ -49,14 +49,9 @@ export default {
   data() {
     return {
       form: new Form({
-        name: null,
-        email: null,
-        phone: null,
-        address: null,
-        city: null,
-        region: null,
-        country: null,
-        postal_code: null,
+        message: null,
+        expression: '0 0 * * *',
+        timezone: null,
       }),
     }
   },

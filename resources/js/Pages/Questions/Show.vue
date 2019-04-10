@@ -27,7 +27,7 @@
         <inertia-link :href="route('questions.edit', question.id)" class="btn-green ml-auto">Edit</inertia-link>
       </div>
     </div>
-    <h2 class="mt-12 font-bold text-2xl">Answers</h2>
+    <h2 class="mt-12 font-bold text-2xl">Replies</h2>
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
       <table class="w-full whitespace-no-wrap">
         <thead>
@@ -39,7 +39,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="entry in entries.data" v-if="entries.data.length" class="hover:bg-gray-200 focus-within:bg-gray-200">
+          <tr v-if="!entries.data.length">
+            <td class="border-t px-6 py-4" colspan="4">No replies found.</td>
+          </tr>
+          <tr v-for="entry in entries.data" v-else class="hover:bg-gray-200 focus-within:bg-gray-200">
             <td class="border-t">
               <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
                 {{ entry.question_sent_at | formatDatetime }}
@@ -58,9 +61,6 @@
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-500" />
               </inertia-link>
             </td>
-          </tr>
-          <tr v-else>
-            <td class="border-t px-6 py-4" colspan="3">No answers found.</td>
           </tr>
         </tbody>
       </table>
