@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\HtmlString;
 use App\Services\Email\InboundEmail;
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Entry extends Model
 {
     protected $fillable = ['message_id', 'message'];
+    private $inboundEmail;
 
     public function question()
     {
@@ -29,7 +31,25 @@ class Entry extends Model
 
     public function body()
     {
-        return trim(InboundEmail::fromMessage($this->message)->body());
+        return new HtmlString(trim($this->inboundEmail()->body()));
+    }
+
+    public function date()
+    {
+        return optional($this->inboundEmail()->date());
+    }
+
+    private function inboundEmail()
+    {
+        if (! $this->message) {
+            return optional();
+        }
+
+        if (! $this->inboundEmail) {
+            $this->inboundEmail = InboundEmail::fromMessage($this->message);
+        }
+
+        return $this->inboundEmail;
     }
 
     public function sanitizedBody()

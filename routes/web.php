@@ -11,15 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/questions');
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/questions/create', 'QuestionsController@create');
-Route::post('/questions', 'QuestionsController@store');
+Route::get('/questions', 'QuestionsController@index')->name('questions.index');
+Route::get('/questions/create', 'QuestionsController@create')->name('questions.create');
+Route::get('/questions/{question}', 'QuestionsController@show')->name('questions.show');
+Route::get('/questions/{question}/edit', 'QuestionsController@edit')->name('questions.edit');
+Route::put('/questions/{question}', 'QuestionsController@update')->name('questions.update');
+Route::post('/questions', 'QuestionsController@store')->name('questions.store');
+Route::delete('/questions/{question}', 'QuestionsController@destroy')->name('questions.destroy');
 
 

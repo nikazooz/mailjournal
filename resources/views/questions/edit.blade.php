@@ -5,17 +5,18 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('New Question') }}</div>
+                <div class="card-header">{{ __('Edit Question') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('questions.store') }}">
+                    <form method="POST" action="{{ route('questions.update', $question) }}">
                         @csrf
+                        @method('PUT')
 
                         <div class="form-group row">
                             <label for="message" class="col-md-4 col-form-label text-md-right">{{ __('Message') }}</label>
 
                             <div class="col-md-6">
-                                <input id="message" type="text" class="form-control{{ $errors->has('message') ? ' is-invalid' : '' }}" name="message" value="{{ old('message') }}" required autofocus>
+                                <input id="message" type="text" class="form-control{{ $errors->has('message') ? ' is-invalid' : '' }}" name="message" value="{{ old('message') ?? $question->message }}" required autofocus>
 
 
                                 @if ($errors->has('message'))
@@ -30,7 +31,7 @@
                             <label for="expression" class="col-md-4 col-form-label text-md-right">{{ __('CRON expression') }}</label>
 
                             <div class="col-md-6">
-                                <input id="expression" type="text" class="form-control{{ $errors->has('expression') ? ' is-invalid' : '' }}" name="expression" value="{{ old('expression') }}" required>
+                                <input id="expression" type="text" class="form-control{{ $errors->has('expression') ? ' is-invalid' : '' }}" name="expression" value="{{ old('expression') ?? $question->expression }}" required>
 
                                 @if ($errors->has('expression'))
                                     <span class="invalid-feedback" role="alert">
@@ -47,7 +48,7 @@
                                 <select id="timezone" type="text" class="form-control{{ $errors->has('timezone') ? ' is-invalid' : '' }}" name="timezone">
                                     <option value="">{{ __('Default') }}</option>
                                     @foreach (timezone_identifiers_list() as $timezone)
-                                        <option value="{{ $timezone }}">{{ $timezone }}</option>
+                                        <option value="{{ $timezone }}"{{ $question->timezone === $timezone ? 'selected' : '' }}>{{ $timezone }}</option>
                                     @endforeach
                                 </select>
 
@@ -62,7 +63,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Create') }}
+                                    {{ __('Update') }}
                                 </button>
                             </div>
                         </div>
