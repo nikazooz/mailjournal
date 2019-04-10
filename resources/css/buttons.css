@@ -4,7 +4,7 @@
   &:hover, &:focus { @apply bg-orange-500 }
 }
 
-.is-loading {
+.btn-green.is-loading {
     color: transparent;
     pointer-events: none;
     position: relative;
