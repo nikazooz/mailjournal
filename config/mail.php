@@ -133,4 +133,21 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Inbound Email
+    |--------------------------------------------------------------------------
+    |
+    | This is the place to configure your inbound email client.
+    |
+    */
+    'inbound' => [
+        'host' => env('INBOUND_MAIL_HOST'),
+        'port' => env('INBOUND_MAIL_PORT'),
+        'address' => env('INBOUND_MAIL_ADDRESS'),
+        'username' => env('INBOUND_MAIL_USERNAME'),
+        'password' => env('INBOUND_MAIL_PASSWORD'),
+        'ssl' => env('INBOUND_MAIL_SSL'),
+    ],
+
 ];
