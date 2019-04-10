@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Events\EmailReceived;
 use Illuminate\Support\Facades\Event;
-use App\Listeners\HandleReceivedEmail;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\AttachReceivedEmailToEntry;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         EmailReceived::class => [
-            HandleReceivedEmail::class,
+            AttachReceivedEmailToEntry::class,
         ],
     ];
 

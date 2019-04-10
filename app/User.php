@@ -70,7 +70,13 @@ class User extends Authenticatable implements HasLocalePreference,
         return $this->locale;
     }
 
-    public function createQuestion($attributes)
+    /**
+     * Create question for the user.
+     *
+     * @param  array  $attributes
+     * @return Question
+     */
+    public function createQuestion(array $attributes)
     {
         return $this->questions()->create($attributes);
     }

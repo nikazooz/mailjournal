@@ -9,7 +9,7 @@ use App\Services\Email\InboundEmail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class HandleReceivedEmail implements ShouldQueue
+class AttachReceivedEmailToEntry implements ShouldQueue
 {
     use InteractsWithQueue;
 

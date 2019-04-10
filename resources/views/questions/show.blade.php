@@ -65,9 +65,9 @@
                         <tbody>
                             @foreach ($question->entries as $entry)
                                 <tr>
-                                    <td>{{ $entry->created_at->format('F j, Y H:i') }}</td>
-                                    <td>{{ $entry->body() }}</td>
-                                    <td>{{ $entry->date()->format('F j, Y H:i') }}</td>
+                                    <td>{{ $entry->sentAt()->format('F j, Y H:i') }}</td>
+                                    <td>{{ $entry->sanitizedBody() }}</td>
+                                    <td>{{ optional($entry->date())->format('F j, Y H:i') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

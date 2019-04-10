@@ -18,6 +18,11 @@ class Question extends Model implements HasTimezonePreference
 {
     use ManagesFrequencies;
 
+     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['user_id', 'message', 'expression', 'timezone'];
 
     /**
