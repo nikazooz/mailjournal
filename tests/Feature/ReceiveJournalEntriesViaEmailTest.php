@@ -8,7 +8,6 @@ use Tests\TestCase;
 use App\Mail\QuestionEmail;
 use Illuminate\Support\Facades\Mail;
 use App\Services\Email\Facades\EmailInbox;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ReceiveJournalEntriesViaEmailTest extends TestCase

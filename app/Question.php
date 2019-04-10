@@ -2,9 +2,12 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Cron\CronExpression;
 use App\Mail\QuestionEmail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use App\Contracts\HasTimezonePreference;
@@ -89,21 +92,18 @@ class Question extends Model implements HasTimezonePreference
         ])->setRelation('question', $this);
     }
 
-    /**
-     * Schedule questions to be sent to the user.
+     /**
+     * Determine if the question should sent based on the Cron expression.
      *
-     * @param  Schedule  $schedule
-     * @return void
+     * @param  Carbon  $date
+     * @return bool
      */
-    public static function scheduleAll(Schedule $schedule)
+    public function isDue(Carbon $date)
     {
-        static::all()->each->addToSchedule($schedule);
-    }
+        if ($timezone = $this->preferredTimezone()) {
+            $date->setTimezone($timezone);
+        }
 
-    public function addToSchedule(Schedule $schedule)
-    {
-        $schedule->call(function() {
-            $this->send();
-        })->cron($this->expression)->timezone($this->preferredTimezone());
+        return CronExpression::factory($this->expression)->isDue($date->toDateTimeString());
     }
 }

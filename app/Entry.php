@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Entry extends Model
 {
     protected $fillable = ['message_id', 'message'];
+
     private $inboundEmail;
 
     public function question()
@@ -45,7 +46,7 @@ class Entry extends Model
             return optional();
         }
 
-        if (! $this->inboundEmail) {
+        if (! $this->inboundEmail || $this->inboundEmail->rawMessage() !== $this->message) {
             $this->inboundEmail = InboundEmail::fromMessage($this->message);
         }
 
