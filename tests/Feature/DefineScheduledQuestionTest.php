@@ -32,14 +32,10 @@ class DefineScheduledQuestionTest extends TestCase
      */
     public function guests_cannot_create_questions()
     {
-        $this->post('/questions', [
-            'message' => 'Some question?',
-            'expression' => '0 19 1/1 * ?', // Every day at 19:00
-            'timezone' => 'Europe/Belgrade',
-        ])->assertRedirect('/login');
+        $this->post('/questions', $this->validParams())->assertRedirect('/login');
 
         $this->assertDatabaseMissing('questions', [
-            'message' => 'Some question?',
+            'message' => 'Test question?',
             'expression' => '0 19 1/1 * ?',
             'timezone' => 'Europe/Belgrade',
         ]);
@@ -50,20 +46,24 @@ class DefineScheduledQuestionTest extends TestCase
      */
     public function authenticated_user_can_schedule_question_to_be_sent()
     {
-        $this->handleValidationExceptions();
         $user = factory(User::class)->create();
 
-        $this->actingAs($user)->post('/questions', [
-            'message' => 'Some question?',
-            'expression' => '0 19 1/1 * *', // Every day at 19:00
-            'timezone' => 'Europe/Belgrade',
-        ])->assertRedirect('/questions');
+        $this->actingAs($user)->post('/questions', $this->validParams())->assertRedirect('/questions');
 
-        $this->assertDatabaseHas('questions', [
+        $this->assertDatabaseHas('questions', $this->validParams([
             'user_id' => $user->id,
-            'message' => 'Some question?',
+            'message' => 'Test question?',
             'expression' => '0 19 1/1 * *',
             'timezone' => 'Europe/Belgrade',
-        ]);
+        ]));
+    }
+
+    private function validParams($overrides = [])
+    {
+        return array_merge([
+            'message' => 'Test question?',
+            'expression' => '0 19 1/1 * *', // Every day at 19:00
+            'timezone' => 'Europe/Belgrade',
+        ], $overrides);
     }
 }
