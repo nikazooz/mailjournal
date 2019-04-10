@@ -22,14 +22,16 @@ class ReceiveJournalEntriesViaEmailTest extends TestCase
     {
         Mail::fake();
         $entry = $this->createQuestion()->send();
+
+        Mail::assertQueued(QuestionEmail::class, 1);
+        Mail::assertQueued(QuestionEmail::class, function ($mailable) use ($entry) {
+            return $mailable->hasTo('john@example.com') && $mailable->entry->is($entry);
+        });
+
         $this->addReplyToInbox($entry->message_id);
 
         $this->artisan('email:check');
 
-        Mail::assertQueued(QuestionEmail::class, 1);
-        Mail::assertQueued(QuestionEmail::class, function ($mailable) {
-            return $mailable->hasTo('john@example.com');
-        });
         $this->assertEquals('<p>Html body of the email</p>', $entry->fresh()->body());
     }
 

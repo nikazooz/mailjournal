@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Contracts\HasTimezonePreference;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasLocalePreference,
+                                              HasTimezonePreference
 {
     use Notifiable;
 
@@ -37,6 +40,47 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * User can schedule many questions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    /**
+     * Get the preferred timezone of the entity.
+     *
+     * @return string|null
+     */
+    public function preferredTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * Get the preferred locale of the entity.
+     *
+     * @return string|null
+     */
+    public function preferredLocale()
+    {
+        return $this->locale;
+    }
+
+    public function createQuestion($attributes)
+    {
+        return $this->questions()->create($attributes);
+    }
+
+    /**
+     * Find user by their email address.
+     *
+     * @param  string  $email
+     * @return self|null
+     */
     public static function findByEmail($email)
     {
         return static::where('email', $email)->first();

@@ -18,21 +18,14 @@ class QuestionEmail extends Mailable implements ShouldQueue
     public $entry;
 
     /**
-     * @var string
-     */
-    private $messageId;
-
-    /**
      * Create a new message instance.
      *
      * @param  Entry  $entry
-     * @param  string  $messageId
      * @return void
      */
-    public function __construct(Entry $entry, $messageId)
+    public function __construct(Entry $entry)
     {
         $this->entry = $entry;
-        $this->messageId = $messageId;
     }
 
     /**
@@ -47,7 +40,7 @@ class QuestionEmail extends Mailable implements ShouldQueue
             ->replyTo(config('mail.inbound.address'), config('app.name'))
             ->subject($this->entry->getQuestion())
             ->withSwiftMessage(function ($message) {
-                $message->setId($this->messageId);
+                $message->setId($this->entry->message_id);
             });
     }
 }
