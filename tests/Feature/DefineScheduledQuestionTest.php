@@ -34,13 +34,13 @@ class DefineScheduledQuestionTest extends TestCase
     {
         $this->post('/questions', [
             'message' => 'Some question?',
-            'frequency' => '0 0 19 1/1 * ? *', // Every day at 19:00
+            'expression' => '0 19 1/1 * ?', // Every day at 19:00
             'timezone' => 'Europe/Belgrade',
         ])->assertRedirect('/login');
 
         $this->assertDatabaseMissing('questions', [
             'message' => 'Some question?',
-            'frequency' => '0 0 19 1/1 * ? *',
+            'expression' => '0 19 1/1 * ?',
             'timezone' => 'Europe/Belgrade',
         ]);
     }
@@ -55,14 +55,14 @@ class DefineScheduledQuestionTest extends TestCase
 
         $this->actingAs($user)->post('/questions', [
             'message' => 'Some question?',
-            'frequency' => '0 0 19 1/1 * ? *', // Every day at 19:00
+            'expression' => '0 19 1/1 * *', // Every day at 19:00
             'timezone' => 'Europe/Belgrade',
         ])->assertRedirect('/questions');
 
         $this->assertDatabaseHas('questions', [
             'user_id' => $user->id,
             'message' => 'Some question?',
-            'frequency' => '0 0 19 1/1 * ? *',
+            'expression' => '0 19 1/1 * *',
             'timezone' => 'Europe/Belgrade',
         ]);
     }

@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use App\Contracts\HasTimezonePreference;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Console\Scheduling\ManagesFrequencies;
 
 class Question extends Model implements HasTimezonePreference
 {
-    protected $fillable = ['user_id', 'message', 'frequency', 'timezone'];
+    use ManagesFrequencies;
+
+    protected $fillable = ['user_id', 'message', 'expression', 'timezone'];
 
     /**
      * The user that scheduled the question.
@@ -55,7 +58,7 @@ class Question extends Model implements HasTimezonePreference
      */
     public function preferredTimezone()
     {
-        return $this->timezone ?? $this->user->preferredTimezone();
+        return $this->attributes['timezone'] ?? $this->user->preferredTimezone();
     }
 
     /**
@@ -94,12 +97,13 @@ class Question extends Model implements HasTimezonePreference
      */
     public static function scheduleAll(Schedule $schedule)
     {
-        static::chunk(500, function ($questions) use ($schedule) {
-            foreach ($questions as $question) {
-                $schedule->call(function() use ($question) {
-                    $question->send();
-                })->cron($question->frequency)->timezone($question->preferredTimezone());
-            }
-        });
+        static::all()->each->addToSchedule($schedule);
+    }
+
+    public function addToSchedule(Schedule $schedule)
+    {
+        $schedule->call(function() {
+            $this->send();
+        })->cron($this->expression)->timezone($this->preferredTimezone());
     }
 }

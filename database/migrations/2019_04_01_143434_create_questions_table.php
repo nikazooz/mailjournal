@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('message', 191);
-            $table->string('frequency', 191);
+            $table->string('expression', 191);
             $table->string('timezone', 191)->nullable();
             $table->timestamps();
 
