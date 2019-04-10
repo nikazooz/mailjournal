@@ -3,75 +3,85 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use Inertia\Inertia;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class QuestionsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function index(Request $request)
     {
-        $this->middleware('auth');
+        return Inertia::render('Questions/Index', [
+            'questions' => $request->user()->questions()->paginate()->only('id', 'message'),
+        ]);
     }
 
-    public function index()
+    public function show(Question $question)
     {
-        return view('questions.index', ['questions' => Question::paginate()]);
-    }
+        $this->authorize($question);
 
-    public function show(Request $request, Question $question)
-    {
-        abort_unless($question->user->is($request->user()), 404);
-
-        return view('questions.show', ['question' => $question->load('entries')]);
+        return Inertia::render('Questions/Show', [
+            'question' => [
+                'id' => $question->id,
+                'message' => $question->message,
+                'expression' => $question->expression,
+                'timezone' => $question->timezone,
+            ],
+            'entries' => $question->entries()->paginate(20, ['*'], 'entries_page')->transform(function ($entry) {
+                return [
+                    'id' => $entry->id,
+                    'reply' => Str::limit(strip_tags((string) $entry->sanitizedBody())),
+                    'question_sent_at' => $entry->sentAt()->toDateTimeString(),
+                    'replied_at' => optional($entry->date())->toDateTimeString(),
+                ];
+            }),
+        ]);
     }
 
     public function create()
     {
-        return view('questions.create');
+        return Inertia::render('Questions/Create', [
+            'timezones' => timezone_identifiers_list(),
+        ]);
     }
 
     public function store(Request $request)
     {
-        $request->user()->createQuestion($request->validate([
+        $question = $request->user()->createQuestion($request->validate([
             'message' => ['required', 'string', 'max:191'],
             'expression' => ['required', 'string', 'cron_expression'],
             'timezone' => ['nullable', Rule::in(timezone_identifiers_list())],
-        ]));
+        ]))->only('id');
 
-        return redirect('/questions');
+        return response()->json($question, 201);
     }
 
-    public function edit( Request $request, Question $question)
+    public function edit(Question $question)
     {
-        abort_unless($question->user->is($request->user()), 404);
+        $this->authorize($question);
 
-        return view('questions.edit', ['question' => $question]);
+        return Inertia::render('Questions/Edit', [
+            'question' => $question,
+            'timezones' => timezone_identifiers_list(),
+        ]);
     }
 
     public function update(Request $request, Question $question)
     {
-        abort_unless($question->user->is($request->user()), 404);
+        $this->authorize($question);
 
         $question->update($request->validate([
             'message' => ['required', 'string', 'max:191'],
             'expression' => ['required', 'string', 'cron_expression'],
             'timezone' => ['nullable', Rule::in(timezone_identifiers_list())],
         ]));
-
-        return redirect('/questions');
     }
 
-    public function destroy(Request $request, Question $question)
+    public function destroy(Question $question)
     {
-        abort_unless($question->user->is($request->user()), 404);
+        $this->authorize($question);
 
         $question->delete();
-
-        return redirect('/questions');
     }
 }

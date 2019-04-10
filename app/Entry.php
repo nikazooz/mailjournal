@@ -17,6 +17,15 @@ class Entry extends Model
     protected $fillable = ['message_id', 'message'];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'replied_at' => 'datetime',
+    ];
+
+    /**
      * @var InboundEmail|null
      */
     private $inboundEmail;

@@ -40,7 +40,9 @@ class AttachReceivedEmailToEntry implements ShouldQueue
              Entry::query()
                 ->forUser($user)
                 ->where('message_id', $messageId)
-                ->update(['message' => $email->rawMessage()]);
+                ->update([
+                    'message' => $email->rawMessage(),
+                ]);
         }
     }
 }

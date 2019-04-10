@@ -2,8 +2,9 @@
 
 namespace App\Services\Email;
 
-use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Mail;
 use Psr\Http\Message\StreamInterface;
 use EmailReplyParser\EmailReplyParser;
@@ -36,9 +37,9 @@ class InboundEmail
         return $this->message()->getHeaderValue('Message-Id', str_random());
     }
 
-    public function date(): Carbon
+    public function date(): CarbonInterface
     {
-        return Carbon::make($this->message()->getHeaderValue('Date'));
+        return Date::make($this->message()->getHeaderValue('Date'));
     }
 
     public function text(): ?string

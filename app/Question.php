@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Cron\CronExpression;
 use App\Mail\QuestionEmail;
 use Illuminate\Support\Str;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Mail;
@@ -100,15 +100,15 @@ class Question extends Model implements HasTimezonePreference
      /**
      * Determine if the question should sent based on the Cron expression.
      *
-     * @param  Carbon  $date
+     * @param  CarbonInterfacte  $date
      * @return bool
      */
-    public function isDue(Carbon $date)
+    public function isDue(CarbonInterface $date)
     {
         if ($timezone = $this->preferredTimezone()) {
             $date->setTimezone($timezone);
         }
 
-        return CronExpression::factory($this->expression)->isDue($date->toDateTimeString());
+        return CronExpression::factory($this->expression)->isDue($date);
     }
 }

@@ -11,16 +11,22 @@
 |
 */
 
-Route::redirect('/', '/questions');
+// Dashboard
+Route::get('/')->name('dashboard')->uses('DashboardController@index')->middleware('auth');
 
-Auth::routes(['verify' => true]);
+// Auth
+Route::get('login')->name('login')->uses('Auth\LoginController@showLoginForm');
+Route::post('login')->name('login.attempt')->uses('Auth\LoginController@login');
+Route::get('logout')->name('logout')->uses('Auth\LoginController@logout');
 
-Route::get('/questions', 'QuestionsController@index')->name('questions.index');
-Route::get('/questions/create', 'QuestionsController@create')->name('questions.create');
-Route::get('/questions/{question}', 'QuestionsController@show')->name('questions.show');
-Route::get('/questions/{question}/edit', 'QuestionsController@edit')->name('questions.edit');
-Route::put('/questions/{question}', 'QuestionsController@update')->name('questions.update');
-Route::post('/questions', 'QuestionsController@store')->name('questions.store');
-Route::delete('/questions/{question}', 'QuestionsController@destroy')->name('questions.destroy');
+// Questions
+Route::get('/questions')->name('questions')->uses('QuestionsController@index')->middleware('remember', 'auth');
+Route::get('/questions/create')->name('questions.create')->uses('QuestionsController@create')->middleware('auth');
+Route::get('/questions/{question}')->name('questions.show')->uses('QuestionsController@show')->middleware('auth');
+Route::get('/questions/{question}/edit')->name('questions.edit')->uses('QuestionsController@edit')->middleware('auth');
+Route::put('/questions/{question}')->name('questions.update')->uses('QuestionsController@update')->middleware('auth');
+Route::post('/questions')->name('questions.store')->uses('QuestionsController@store')->middleware('auth');
+Route::delete('/questions/{question}')->name('questions.destroy')->uses('QuestionsController@destroy')->middleware('auth');
 
+Route::get('/entries/{entry}')->name('entries.show')->uses('EntriesController@show')->middleware('auth', 'can:view,entry');
 
