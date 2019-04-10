@@ -9,5 +9,7 @@
 @import "nprogress";
 @import "spinner";
 
+@import "pages";
+
 /* Utilities */
 @import "tailwindcss/utilities";

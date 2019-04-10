@@ -1,0 +1,12 @@
+.error-page {
+    @apply .flex .items-center .justify-center .relative .h-screen .text-gray-900 .font-hairline;
+    font-family: "Nunito", sans-serif;
+}
+
+.error-page .code {
+    @apply .border-r-2 .border-black .text-3xl .px-4 .text-center
+}
+
+.error-page .message {
+    @apply .text-xl .text-center .p-3
+}
