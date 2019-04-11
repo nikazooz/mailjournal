@@ -11,13 +11,20 @@
 |
 */
 
+Route::redirect('/', '/dashboard');
+
 // Dashboard
-Route::get('/')->name('dashboard')->uses('DashboardController@index')->middleware('auth');
+Route::get('/dashboard')->name('dashboard')->uses('DashboardController@index')->middleware('auth');
 
 // Auth
 Route::get('login')->name('login')->uses('Auth\LoginController@showLoginForm');
 Route::post('login')->name('login.attempt')->uses('Auth\LoginController@login');
 Route::get('logout')->name('logout')->uses('Auth\LoginController@logout');
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 // Questions
 Route::get('/questions')->name('questions')->uses('QuestionsController@index')->middleware('remember', 'auth');
@@ -29,4 +36,3 @@ Route::post('/questions')->name('questions.store')->uses('QuestionsController@st
 Route::delete('/questions/{question}')->name('questions.destroy')->uses('QuestionsController@destroy')->middleware('auth');
 
 Route::get('/entries/{entry}')->name('entries.show')->uses('EntriesController@show')->middleware('auth', 'can:view,entry');
-

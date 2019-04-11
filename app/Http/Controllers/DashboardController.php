@@ -13,6 +13,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Dashboard/Index', [
+            'status' => session('status'),
             'entries' => Entry::forUser($request->user())
                 ->with('question')
                 ->latest()

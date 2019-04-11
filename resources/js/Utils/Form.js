@@ -24,6 +24,7 @@ class Form {
   }
 
   request(request, then) {
+    this.errors.record()
     this.sending = true
 
     request.then(response => {

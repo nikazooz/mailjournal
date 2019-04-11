@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/questions';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -42,7 +42,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return Inertia::render('Auth/Login', [
-            'intendedUrl' => session('url.intended', route('dashboard')),
+            'intendedUrl' => session('url.intended', $this->redirectPath()),
         ]);
     }
 
