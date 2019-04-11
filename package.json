@@ -19,6 +19,7 @@
         "eslint-plugin-vue": "^5.2.2",
         "inertia-vue": "inertiajs/inertia-vue",
         "laravel-mix": "^4.0.7",
+        "laravel-mix-purgecss": "^4.1.0",
         "lodash": "^4.17.5",
         "moment": "^2.24.0",
         "popper.js": "^1.12",
