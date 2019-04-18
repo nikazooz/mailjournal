@@ -13,26 +13,24 @@
 
 Route::redirect('/', '/dashboard');
 
-// Dashboard
-Route::get('/dashboard')->name('dashboard')->uses('DashboardController@index')->middleware('auth');
-
 // Auth
-Route::get('login')->name('login')->uses('Auth\LoginController@showLoginForm');
-Route::post('login')->name('login.attempt')->uses('Auth\LoginController@login');
-Route::get('logout')->name('logout')->uses('Auth\LoginController@logout');
+Route::auth([
+    'register' => false,
+    'verify' => true,
+]);
 
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+Route::middleware('auth', 'verified')->group(function () {
+    // Dashboard
+    Route::get('/dashboard')->name('dashboard')->uses('DashboardController@index');
 
-// Questions
-Route::get('/questions')->name('questions')->uses('QuestionsController@index')->middleware('remember', 'auth');
-Route::get('/questions/create')->name('questions.create')->uses('QuestionsController@create')->middleware('auth');
-Route::get('/questions/{question}')->name('questions.show')->uses('QuestionsController@show')->middleware('auth');
-Route::get('/questions/{question}/edit')->name('questions.edit')->uses('QuestionsController@edit')->middleware('auth');
-Route::put('/questions/{question}')->name('questions.update')->uses('QuestionsController@update')->middleware('auth');
-Route::post('/questions')->name('questions.store')->uses('QuestionsController@store')->middleware('auth');
-Route::delete('/questions/{question}')->name('questions.destroy')->uses('QuestionsController@destroy')->middleware('auth');
+    // Questions
+    Route::get('/questions')->name('questions')->uses('QuestionsController@index')->middleware('remember');
+    Route::get('/questions/create')->name('questions.create')->uses('QuestionsController@create');
+    Route::get('/questions/{question}')->name('questions.show')->uses('QuestionsController@show');
+    Route::get('/questions/{question}/edit')->name('questions.edit')->uses('QuestionsController@edit');
+    Route::put('/questions/{question}')->name('questions.update')->uses('QuestionsController@update');
+    Route::post('/questions')->name('questions.store')->uses('QuestionsController@store');
+    Route::delete('/questions/{question}')->name('questions.destroy')->uses('QuestionsController@destroy');
 
-Route::get('/entries/{entry}')->name('entries.show')->uses('EntriesController@show')->middleware('auth', 'can:view,entry');
+    Route::get('/entries/{entry}')->name('entries.show')->uses('EntriesController@show')->middleware('can:view,entry');
+});

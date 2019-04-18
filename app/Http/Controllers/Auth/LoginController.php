@@ -48,7 +48,9 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        return response()->json(['success' => true]);
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
     }
 
     protected function loggedOut(Request $request)

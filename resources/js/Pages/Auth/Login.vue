@@ -63,7 +63,7 @@ export default {
   methods: {
     submit() {
       this.form.post({
-        url: this.route('login.attempt').url(),
+        url: this.route('login').url(),
         then: () => Inertia.visit(this.intendedUrl)
       })
     }

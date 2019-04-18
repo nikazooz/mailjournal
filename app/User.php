@@ -9,7 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 
 class User extends Authenticatable implements HasLocalePreference,
-                                              HasTimezonePreference
+                                              HasTimezonePreference,
+                                              MustVerifyEmail
 {
     use Notifiable;
 
