@@ -8,12 +8,28 @@
 
         <div class="mx-auto mt-6 w-24 border-b-2" />
 
-        <text-input v-model="form.fields.email" class="mt-10" label="Email" :error="form.errors.first('email')" type="email" autofocus autocapitalize="off" />
+        <text-input
+          type="email"
+          name="email"
+          class="mt-10"
+          v-model="form.fields.email"
+          label="Email"
+          :error="form.errors.first('email')"
+          autocapitalize="off"
+          autofocus
+        />
 
-        <text-input v-model="form.fields.password" class="mt-6" label="Password" :error="form.errors.first('password')" type="password" />
+        <text-input
+          type="password"
+          name="password"
+          class="mt-6"
+          v-model="form.fields.password"
+          label="Password"
+          :error="form.errors.first('password')"
+        />
 
         <label class="mt-6 select-none flex items-center" for="remember">
-          <input id="remember" v-model="form.fields.remember" class="mr-1" type="checkbox">
+          <input id="remember" type="checkbox" name="remember" class="mr-1" v-model="form.fields.remember">
 
           <span class="text-sm">Remember Me</span>
         </label>
