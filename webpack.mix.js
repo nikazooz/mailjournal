@@ -32,5 +32,7 @@ mix.js('resources/js/app.js', 'public/js')
       },
     },
   })
-  .purgeCss()
+  .purgeCss({
+    whitelistPatternsChildren: [/^nprogress$/]
+  })
   .version()
