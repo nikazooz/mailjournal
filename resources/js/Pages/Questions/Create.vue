@@ -8,17 +8,17 @@
     <div class="bg-white rounded shadow overflow-hidden max-w-lg">
       <form @submit.prevent="submit">
         <div class="p-8 flex flex-wrap">
-          <text-input v-model="form.fields.message" class="mb-8 w-full" :error="form.errors.first('message')" label="Message" />
+          <text-input v-model="form.message" class="mb-8 w-full" :errors="errors.message" label="Message" />
 
-          <cron-input v-model="form.fields.expression" class="mb-8 w-full" :error="form.errors.first('expression')" label="Recurrence" />
+          <cron-input v-model="form.expression" class="mb-8 w-full" :errors="errors.expression" label="Recurrence" />
 
-          <select-input v-model="form.fields.timezone" class="w-full" :error="form.errors.first('timezone')" label="Timezone">
+          <select-input v-model="form.timezone" class="w-full" :errors="errors.timezone" label="Timezone">
             <option :value="null">Default</option>
             <option :value="timezone" v-for="timezone in timezones">{{ timezone }}</option>
           </select-input>
         </div>
         <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex justify-end items-center">
-          <loading-button :loading="form.sending" class="btn-green" type="submit">Create Question</loading-button>
+          <loading-button :loading="sending" class="btn-green" type="submit">Create Question</loading-button>
         </div>
       </form>
     </div>
@@ -27,7 +27,6 @@
 
 <script>
 import { Inertia, InertiaLink } from 'inertia-vue'
-import Form from '@/Utils/Form'
 import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
 import CronInput from '@/Shared/CronInput'
@@ -44,22 +43,33 @@ export default {
     TextInput,
   },
   props: {
-    timezones: Array
+    timezones: Array,
+    errors: {
+      type: Object,
+      default: () => ({})
+    }
   },
   data() {
     return {
-      form: new Form({
+      sending: false,
+      form: {
         message: null,
         expression: '0 0 * * *',
-        timezone: null,
-      }),
+        timezone: null
+      }
+    }
+  },
+  watch: {
+    form: {
+      handler: form => Inertia.cache('question', form),
+      deep: true
     }
   },
   methods: {
     submit() {
-      this.form.post({
-        url: this.route('questions.store').url(),
-        then: data => Inertia.visit(this.route('questions.show', data.id)),
+      this.sending = true
+      Inertia.post(this.route('questions.store'), this.form).then(() => {
+        this.sending = false
       })
     },
   },

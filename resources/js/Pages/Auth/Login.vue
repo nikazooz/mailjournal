@@ -12,9 +12,9 @@
           type="email"
           name="email"
           class="mt-10"
-          v-model="form.fields.email"
+          v-model="form.email"
           label="Email"
-          :error="form.errors.first('email')"
+          :errors="errors.email"
           autocapitalize="off"
           autofocus
         />
@@ -23,13 +23,13 @@
           type="password"
           name="password"
           class="mt-6"
-          v-model="form.fields.password"
+          v-model="form.password"
           label="Password"
-          :error="form.errors.first('password')"
+          :errors="errors.password"
         />
 
         <label class="mt-6 select-none flex items-center" for="remember">
-          <input id="remember" type="checkbox" name="remember" class="mr-1" v-model="form.fields.remember">
+          <input id="remember" type="checkbox" name="remember" class="mr-1" v-model="form.remember">
 
           <span class="text-sm">Remember Me</span>
         </label>
@@ -38,7 +38,7 @@
       <div class="px-10 py-4 bg-gray-100 border-t border-gray-300 flex justify-between items-center">
         <inertia-link class="hover:underline" tabindex="-1" :href="route('password.request')">Forget password?</inertia-link>
 
-        <loading-button :loading="form.sending" class="btn-green" type="submit">Login</loading-button>
+        <loading-button :loading="sending" class="btn-green" type="submit">Login</loading-button>
       </div>
     </form>
   </auth-layout>
@@ -46,7 +46,6 @@
 
 <script>
 import { Inertia, InertiaLink } from 'inertia-vue'
-import Form from '@/Utils/Form'
 import AuthLayout from '@/Shared/AuthLayout'
 import LoadingButton from '@/Shared/LoadingButton'
 import TextInput from '@/Shared/TextInput'
@@ -59,16 +58,17 @@ export default {
     TextInput
   },
   props: {
-    intendedUrl: String
+    errors: Object
   },
   inject: ['page'],
   data() {
     return {
-      form: new Form({
+      sending: false,
+      form: {
         email: null,
         password: null,
         remember: null
-      })
+      }
     }
   },
   computed: {
@@ -78,9 +78,9 @@ export default {
   },
   methods: {
     submit() {
-      this.form.post({
-        url: this.route('login').url(),
-        then: () => Inertia.visit(this.intendedUrl)
+      this.sending = true
+      Inertia.post(this.route('login'), this.form).then(() => {
+        this.sending = false
       })
     }
   }

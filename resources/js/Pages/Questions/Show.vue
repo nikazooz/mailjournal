@@ -1,5 +1,5 @@
 <template>
-  <layout :title="form.fields.name">
+  <layout :title="question.name">
     <h1 class="mb-8 font-bold text-3xl">
       <inertia-link class="text-green-400 hover:text-green-600" :href="route('questions')">Questions</inertia-link>
       <span class="text-green-400 font-medium">/</span>
@@ -72,7 +72,6 @@
 <script>
 import { Inertia, InertiaLink } from 'inertia-vue'
 import cronstrue from 'cronstrue'
-import Form from '@/Utils/Form'
 import Icon from '@/Shared/Icon'
 import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
@@ -94,11 +93,6 @@ export default {
     question: Object,
     entries: Object,
   },
-  data() {
-    return {
-      form: new Form()
-    }
-  },
   computed: {
     humanReadableExpression() {
       return cronstrue.toString(this.question.expression)
@@ -107,10 +101,7 @@ export default {
   methods: {
     destroy() {
       if (confirm('Are you sure you want to delete this question?')) {
-        this.form.delete({
-          url: this.route('questions.destroy', this.question.id).url(),
-          then: () => Inertia.replace(this.route('questions').url()),
-        })
+        Inertia.delete(this.route('questions.destroy', this.question.id))
       }
     },
     trimString(value, charCount = 50) {

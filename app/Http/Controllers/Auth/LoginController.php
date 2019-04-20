@@ -41,20 +41,6 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return Inertia::render('Auth/Login', [
-            'intendedUrl' => session('url.intended', $this->redirectPath()),
-        ]);
-    }
-
-    protected function authenticated(Request $request, $user)
-    {
-        if ($request->expectsJson()) {
-            return response()->json(['success' => true]);
-        }
-    }
-
-    protected function loggedOut(Request $request)
-    {
-        return redirect()->route('login');
+        return Inertia::render('Auth/Login');
     }
 }

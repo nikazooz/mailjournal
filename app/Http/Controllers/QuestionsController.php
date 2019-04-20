@@ -52,9 +52,9 @@ class QuestionsController extends Controller
             'message' => ['required', 'string', 'max:191'],
             'expression' => ['required', 'string', 'cron_expression'],
             'timezone' => ['nullable', Rule::in(timezone_identifiers_list())],
-        ]))->only('id');
+        ]));
 
-        return response()->json($question, 201);
+        return redirect()->route('questions.show', $question);
     }
 
     public function edit(Question $question)
@@ -76,6 +76,8 @@ class QuestionsController extends Controller
             'expression' => ['required', 'string', 'cron_expression'],
             'timezone' => ['nullable', Rule::in(timezone_identifiers_list())],
         ]));
+
+        return redirect()->route('questions.show', $question);
     }
 
     public function destroy(Question $question)
@@ -83,5 +85,7 @@ class QuestionsController extends Controller
         $this->authorize($question);
 
         $question->delete();
+
+        return redirect()->route('questions');
     }
 }

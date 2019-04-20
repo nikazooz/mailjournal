@@ -11,7 +11,7 @@ if (process.env.MIX_APP_ENV === 'production') {
     Vue.config.silent = true
 }
 
-Vue.mixin({ methods: { route: window.route } })
+Vue.mixin({ methods: { route: (...args) => window.route(...args).url() } })
 
 Vue.filter('formatDatetime', (datetime, format = 'MMMM D, YYYY HH:mm') => {
    const momentObj = moment(datetime)
