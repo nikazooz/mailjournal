@@ -38,6 +38,10 @@ trait ShowsErrorPageUsingInertia
      */
     private function responseStatusText($statusCode)
     {
+        if ($statusCode === 419) {
+            return 'Page Expired';
+        }
+
         return Response::$statusTexts[$statusCode] ?? 'Unknown Error';
     }
 }
