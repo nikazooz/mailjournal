@@ -30,12 +30,10 @@
 </template>
 
 <script>
-import { InertiaLink } from 'inertia-vue'
 import Layout from '@/Shared/Layout'
 
 export default {
   components: {
-    InertiaLink,
     Layout
   },
   props: {

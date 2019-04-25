@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import { Inertia, InertiaLink } from 'inertia-vue'
 import AuthLayout from '@/Shared/AuthLayout'
 import LoadingButton from '@/Shared/LoadingButton'
 import TextInput from '@/Shared/TextInput'
@@ -53,7 +52,6 @@ import TextInput from '@/Shared/TextInput'
 export default {
   components: {
     AuthLayout,
-    InertiaLink,
     LoadingButton,
     TextInput
   },
@@ -79,7 +77,7 @@ export default {
   methods: {
     submit() {
       this.sending = true
-      Inertia.post(this.route('login'), this.form).then(() => {
+      this.$inertia.post(this.route('login'), this.form).then(() => {
         this.sending = false
       })
     }

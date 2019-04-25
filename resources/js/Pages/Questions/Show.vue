@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import { Inertia, InertiaLink } from 'inertia-vue'
 import cronstrue from 'cronstrue'
 import Icon from '@/Shared/Icon'
 import Layout from '@/Shared/Layout'
@@ -81,7 +80,6 @@ import TextInput from '@/Shared/TextInput'
 
 export default {
   components: {
-    InertiaLink,
     Icon,
     Layout,
     LoadingButton,
@@ -101,7 +99,7 @@ export default {
   methods: {
     destroy() {
       if (confirm('Are you sure you want to delete this question?')) {
-        Inertia.delete(this.route('questions.destroy', this.question.id))
+        this.$inertia.delete(this.route('questions.destroy', this.question.id))
       }
     },
     trimString(value, charCount = 50) {

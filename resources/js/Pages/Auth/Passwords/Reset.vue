@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { Inertia } from 'inertia-vue'
 import AuthLayout from '@/Shared/AuthLayout'
 import LoadingButton from '@/Shared/LoadingButton'
 import TextInput from '@/Shared/TextInput'
@@ -55,7 +54,7 @@ export default {
   methods: {
     submit() {
       this.sending = true
-      Inertia.post(this.route('password.update'), this.form).then(() => {
+      this.$inertia.post(this.route('password.update'), this.form).then(() => {
         this.sending = false
       })
     }

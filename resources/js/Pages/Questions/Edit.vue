@@ -26,17 +26,14 @@
 </template>
 
 <script>
-import { Inertia, InertiaLink } from 'inertia-vue'
 import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
 import CronInput from '@/Shared/CronInput'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
-import TrashedMessage from '@/Shared/TrashedMessage'
 
 export default {
   components: {
-    InertiaLink,
     Layout,
     LoadingButton,
     CronInput,
@@ -67,7 +64,7 @@ export default {
   methods: {
     submit() {
       this.sending = true
-      Inertia.put(this.route('questions.update', this.question.id), this.form).then(() => {
+      this.$inertia.put(this.route('questions.update', this.question.id), this.form).then(() => {
         this.sending = false
       })
     }

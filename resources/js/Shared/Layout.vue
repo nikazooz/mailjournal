@@ -43,14 +43,12 @@
 </template>
 
 <script>
-import { InertiaLink } from 'inertia-vue'
 import Dropdown from '@/Shared/Dropdown'
 import Icon from '@/Shared/Icon'
 import MainMenu from '@/Shared/MainMenu'
 
 export default {
   components: {
-    InertiaLink,
     Dropdown,
     Icon,
     MainMenu

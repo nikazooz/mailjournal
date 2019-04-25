@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { Inertia, InertiaLink } from 'inertia-vue'
 import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
 import CronInput from '@/Shared/CronInput'
@@ -35,7 +34,6 @@ import TextInput from '@/Shared/TextInput'
 
 export default {
   components: {
-    InertiaLink,
     Layout,
     LoadingButton,
     CronInput,
@@ -49,6 +47,7 @@ export default {
       default: () => ({})
     }
   },
+  remember: 'form',
   data() {
     return {
       sending: false,
@@ -61,14 +60,14 @@ export default {
   },
   watch: {
     form: {
-      handler: form => Inertia.cache('question', form),
+      handler: form => this.$inertia.cache('question', form),
       deep: true
     }
   },
   methods: {
     submit() {
       this.sending = true
-      Inertia.post(this.route('questions.store'), this.form).then(() => {
+      this.$inertia.post(this.route('questions.store'), this.form).then(() => {
         this.sending = false
       })
     },

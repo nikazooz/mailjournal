@@ -48,13 +48,11 @@
 </template>
 
 <script>
-import { InertiaLink } from 'inertia-vue'
 import Layout from '@/Shared/Layout'
 import Icon from '@/Shared/Icon'
 
 export default {
   components: {
-    InertiaLink,
     Layout,
     Icon
   },

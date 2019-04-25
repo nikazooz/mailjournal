@@ -19,13 +19,11 @@
 </template>
 
 <script>
-import { InertiaLink } from 'inertia-vue'
 import AuthLayout from '@/Shared/AuthLayout'
 
 export default {
   components: {
-    AuthLayout,
-    InertiaLink
+    AuthLayout
   },
   props: {
     resent: Boolean
