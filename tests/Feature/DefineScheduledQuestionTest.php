@@ -25,9 +25,9 @@ class DefineScheduledQuestionTest extends TestCase
     {
         $this->actingAs(factory(User::class)->create())
              ->get('/questions/create')
-             ->assertViewHas('component', 'Questions/Create')
-             ->assertViewHas('props', function ($props) {
-                return is_array($props['timezones']);
+             ->assertViewIs('app')
+             ->assertViewHas('page', function ($page) {
+                return $page['component'] === 'Questions/Create' && is_array($page['props']['timezones']);
              });
     }
 
@@ -52,9 +52,10 @@ class DefineScheduledQuestionTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user)->post('/questions', $this->validParams())->assertStatus(201);
+        $response = $this->actingAs($user)
+            ->post('/questions', $this->validParams())
+            ->assertRedirect();
 
-        $this->assertArrayHasKey('id', $response->json());
         $this->assertDatabaseHas('questions', $this->validParams([
             'user_id' => $user->id,
             'message' => 'Test question?',
