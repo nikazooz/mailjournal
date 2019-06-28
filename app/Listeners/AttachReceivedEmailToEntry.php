@@ -14,16 +14,6 @@ class AttachReceivedEmailToEntry implements ShouldQueue
     use InteractsWithQueue;
 
     /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Handle the event.
      *
      * @param  EmailReceived  $event

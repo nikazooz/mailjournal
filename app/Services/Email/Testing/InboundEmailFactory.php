@@ -2,18 +2,19 @@
 
 namespace App\Services\Email\Testing;
 
+use Swift_Mailer;
 use Illuminate\Mail\Message;
 use App\Services\Email\InboundEmail;
-use Illuminate\Contracts\Support\Htmlable;
 
 class InboundEmailFactory
 {
-    /**
-     * @var \Swift_Mailer
-     */
+    /** @var Swift_Mailer */
     private $swift;
 
-    public function __construct(\Swift_Mailer $swift)
+    /**
+     * @param  Swift_Mailer  $swift
+     */
+    public function __construct(Swift_Mailer $swift)
     {
         $this->swift = $swift;
     }
@@ -24,7 +25,7 @@ class InboundEmailFactory
      * @param  array  $attributes
      * @return InboundEmail
      */
-    public function create(array $attributes)
+    public function create(array $attributes): InboundEmail
     {
         $message = new Message($this->swift->createMessage('message'));
 
@@ -35,7 +36,14 @@ class InboundEmailFactory
         return InboundEmail::fromMessage($rawMessage);
     }
 
-    private function fill($message, $attributes)
+    /**
+     * Fill the message with received content.
+     *
+     * @param  Message  $message
+     * @param  array $attributes
+     * @return void
+     */
+    private function fill(Message $message, array $attributes)
     {
         $message->from($attributes['from'] ?? null, $attributes['from_name'] ?? null)
                 ->to(config('mail.inbound.address'))
@@ -50,7 +58,13 @@ class InboundEmailFactory
         $this->addContent($message, $html, $plain, $raw);
     }
 
-    private function body($body = [])
+    /**
+     * Get different versions of body.
+     *
+     * @param  array  $body
+     * @return array
+     */
+    private function body(array $body = []): array
     {
         return [
             $body['html'] ?? null,
@@ -62,13 +76,13 @@ class InboundEmailFactory
     /**
      * Add the content to a given message.
      *
-     * @param  \Illuminate\Mail\Message  $message
-     * @param  string  $html
-     * @param  string  $plain
-     * @param  string  $raw
+     * @param  Message  $message
+     * @param  string|null  $html
+     * @param  string|null  $plain
+     * @param  string|null  $raw
      * @return void
      */
-    protected function addContent($message, $html, $plain, $raw)
+    protected function addContent(Message $message = null, string $html = null, string $plain = null, string $raw = null)
     {
         if (isset($html)) {
             $message->setBody($html, 'text/html');

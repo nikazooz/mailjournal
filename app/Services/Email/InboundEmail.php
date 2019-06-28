@@ -37,7 +37,7 @@ class InboundEmail
         return $this->message()->getHeaderValue('Message-Id', str_random());
     }
 
-    public function date(): CarbonInterface
+    public function date(): ?CarbonInterface
     {
         return Date::make($this->message()->getHeaderValue('Date'));
     }

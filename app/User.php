@@ -5,6 +5,7 @@ namespace App;
 use App\Contracts\HasTimezonePreference;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 
@@ -44,9 +45,9 @@ class User extends Authenticatable implements HasLocalePreference,
     /**
      * User can schedule many questions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function questions()
+    public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
     }
@@ -56,7 +57,7 @@ class User extends Authenticatable implements HasLocalePreference,
      *
      * @return string|null
      */
-    public function preferredTimezone()
+    public function preferredTimezone(): ?string
     {
         return $this->timezone;
     }
@@ -66,7 +67,7 @@ class User extends Authenticatable implements HasLocalePreference,
      *
      * @return string|null
      */
-    public function preferredLocale()
+    public function preferredLocale(): ?string
     {
         return $this->locale;
     }
@@ -77,7 +78,7 @@ class User extends Authenticatable implements HasLocalePreference,
      * @param  array  $attributes
      * @return Question
      */
-    public function createQuestion(array $attributes)
+    public function createQuestion(array $attributes): Question
     {
         return $this->questions()->create($attributes);
     }
@@ -88,7 +89,7 @@ class User extends Authenticatable implements HasLocalePreference,
      * @param  string  $email
      * @return self|null
      */
-    public static function findByEmail($email)
+    public static function findByEmail($email): ?self
     {
         return static::where('email', $email)->first();
     }

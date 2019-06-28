@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Question;
-use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -19,9 +19,10 @@ class SendDueQuestions implements ShouldQueue
     /**
      * Create a new job instance.
      *
+     * @param  CarbonInterface  $now
      * @return void
      */
-    public function __construct(Carbon $now)
+    public function __construct(CarbonInterface $now)
     {
         $this->now = $now;
     }
@@ -34,7 +35,7 @@ class SendDueQuestions implements ShouldQueue
     public function handle()
     {
         Question::chunk(300, function ($questions) {
-            $questions->filter->isDue($this->now->copy())->each->send();
+            $questions->filter->isDue($this->now)->each->send();
         });
     }
 }

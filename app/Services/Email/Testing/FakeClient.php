@@ -10,7 +10,7 @@ class FakeClient implements Client
     /** @var InboundEmail[] */
     private $unseenEmails = [];
 
-    /** @var InboundMailFactory */
+    /** @var InboundEmailFactory */
     private $factory;
 
     public function __construct(InboundEmailFactory $factory)
@@ -24,7 +24,7 @@ class FakeClient implements Client
      * @param  InboundEmail|array  $email
      * @return self
      */
-    public function addToInbox($email)
+    public function addToInbox($email): self
     {
         if (is_array($email)) {
             $email = $this->factory->create($email);

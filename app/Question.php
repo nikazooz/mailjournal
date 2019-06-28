@@ -4,15 +4,18 @@ namespace App;
 
 use Cron\CronExpression;
 use App\Mail\QuestionEmail;
-use Illuminate\Support\Str;
 use Carbon\CarbonInterface;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use App\Contracts\HasTimezonePreference;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Console\Scheduling\ManagesFrequencies;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Question extends Model implements HasTimezonePreference
 {
@@ -28,9 +31,9 @@ class Question extends Model implements HasTimezonePreference
     /**
      * The user that scheduled the question.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -38,9 +41,9 @@ class Question extends Model implements HasTimezonePreference
     /**
      * Entries in repliy to the question.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function entries()
+    public function entries(): HasMany
     {
         return $this->hasMany(Entry::class);
     }
@@ -48,14 +51,14 @@ class Question extends Model implements HasTimezonePreference
     /**
      * Scope the query to get only questions defined by the given User.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @param  User  $user
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
-    public function scopeForUser($query, User $user)
+    public function scopeForUser(Builder $query, User $user)
     {
-        return $query->whereHas('user', function ($query) use ($user) {
-            return $query->where('user_id', $user->id);
+        $query->whereHas('user', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
         });
     }
 
@@ -64,7 +67,7 @@ class Question extends Model implements HasTimezonePreference
      *
      * @return string|null
      */
-    public function preferredTimezone()
+    public function preferredTimezone(): ?string
     {
         return $this->attributes['timezone'] ?? $this->user->preferredTimezone();
     }
@@ -74,7 +77,7 @@ class Question extends Model implements HasTimezonePreference
      *
      * @return Entry
      */
-    public function send()
+    public function send(): Entry
     {
         return DB::transaction(function () {
             $entry = $this->createEntry();
@@ -90,7 +93,7 @@ class Question extends Model implements HasTimezonePreference
      *
      * @return Entry
      */
-    private function createEntry()
+    private function createEntry(): Entry
     {
         return $this->entries()->create([
             'message_id' => sprintf('%s@swift.generated', Str::random(32)),
@@ -100,13 +103,13 @@ class Question extends Model implements HasTimezonePreference
      /**
      * Determine if the question should sent based on the Cron expression.
      *
-     * @param  CarbonInterfacte  $date
+     * @param  CarbonInterface  $date
      * @return bool
      */
-    public function isDue(CarbonInterface $date)
+    public function isDue(CarbonInterface $date): bool
     {
         if ($timezone = $this->preferredTimezone()) {
-            $date->setTimezone($timezone);
+            $date = $date->setTimezone($timezone);
         }
 
         return CronExpression::factory($this->expression)->isDue($date);

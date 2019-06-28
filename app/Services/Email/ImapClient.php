@@ -58,7 +58,7 @@ class ImapClient implements Client
      *
      * @return Imap
      */
-    private function loginToInbox()
+    private function loginToInbox(): Imap
     {
         return tap($this->connect(), function ($imap) {
             $imap->login($this->config['username'], $this->config['password']);
@@ -71,7 +71,7 @@ class ImapClient implements Client
      *
      * @return Imap
      */
-    private function connect()
+    private function connect(): Imap
     {
         return new Imap(
             $this->config['host'],

@@ -36,7 +36,7 @@ trait ShowsErrorPageUsingInertia
      * @param  int  $statusCode
      * @return string
      */
-    private function responseStatusText($statusCode)
+    private function responseStatusText($statusCode): string
     {
         if ($statusCode === 419) {
             return 'Page Expired';

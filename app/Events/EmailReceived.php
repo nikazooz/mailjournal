@@ -28,7 +28,7 @@ class EmailReceived
      *
      * @return InboundEmail
      */
-    public function email()
+    public function email(): InboundEmail
     {
         return $this->email;
     }

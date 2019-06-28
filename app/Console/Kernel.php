@@ -3,8 +3,8 @@
 namespace App\Console;
 
 use App\Question;
-use Carbon\Carbon;
 use App\Jobs\SendDueQuestions;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            SendDueQuestions::dispatch(Carbon::now());
+            SendDueQuestions::dispatch(Date::now());
         })->everyMinute();
 
         $schedule->command('email:check')->everyMinute()->withoutOverlapping(10);

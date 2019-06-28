@@ -2,10 +2,13 @@
 
 namespace App;
 
+use DateTimeInterface;
 use Illuminate\Support\HtmlString;
 use App\Services\Email\InboundEmail;
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Entry extends Model
 {
@@ -33,9 +36,9 @@ class Entry extends Model
     /**
      * Question the entry is for.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function question()
+    public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);
     }
@@ -43,14 +46,14 @@ class Entry extends Model
      /**
      * Scope the query to get only entries for given User.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @param  User  $user
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
-    public function scopeForUser($query, User $user)
+    public function scopeForUser(Builder $query, User $user)
     {
-        return $query->whereHas('question', function ($query) use ($user) {
-            return $query->forUser($user);
+        $query->whereHas('question', function ($query) use ($user) {
+           $query->forUser($user);
         });
     }
 
@@ -59,7 +62,7 @@ class Entry extends Model
      *
      * @return string
      */
-    public function getQuestion()
+    public function getQuestion(): string
     {
         return $this->question->message;
     }
@@ -69,7 +72,7 @@ class Entry extends Model
      *
      * @return string
      */
-    public function body()
+    public function body(): string
     {
         return trim($this->inboundEmail()->body());
     }
@@ -77,9 +80,9 @@ class Entry extends Model
     /**
      * Get date the entry was sent at.
      *
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function date()
+    public function date(): ?DateTimeInterface
     {
         if ($date = $this->inboundEmail()->date()) {
             return $date->setTimezone($this->question->preferredTimezone());
@@ -89,9 +92,9 @@ class Entry extends Model
     /**
      * Get datetime when the questions was sent.
      *
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function sentAt()
+    public function sentAt(): DateTimeInterface
     {
         return $this->created_at->setTimezone($this->question->preferredTimezone());
     }
@@ -99,12 +102,12 @@ class Entry extends Model
     /**
      * Get inbound email.
      *
-     * @return InboundEmail|\Illuminate\Support\Optional
+     * @return InboundEmail
      */
-    private function inboundEmail()
+    private function inboundEmail(): InboundEmail
     {
         if (! $this->message) {
-            return optional();
+            return InboundEmail::fromMessage('');
         }
 
         if (! $this->inboundEmail || $this->inboundEmail->rawMessage() !== $this->message) {
@@ -119,7 +122,7 @@ class Entry extends Model
      *
      * @return HtmlString
      */
-    public function sanitizedBody()
+    public function sanitizedBody(): HtmlString
     {
         return new HtmlString(Purify::clean($this->body()));
     }
