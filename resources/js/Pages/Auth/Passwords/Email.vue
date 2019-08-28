@@ -33,7 +33,6 @@ export default {
     errors: Object,
     status: String
   },
-  inject: ['page'],
   data() {
     return {
       sending: false,

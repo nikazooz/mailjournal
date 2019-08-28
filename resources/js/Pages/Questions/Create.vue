@@ -60,8 +60,10 @@ export default {
   },
   watch: {
     form: {
-      handler: form => this.$inertia.cache('question', form),
-      deep: true
+      deep: true,
+      handler(form) {
+        return this.$inertia.remember(form, 'question')
+      }
     }
   },
   methods: {

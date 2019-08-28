@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import Inertia from 'inertia-vue'
+import { InertiaApp } from '@inertiajs/inertia-vue'
 import PortalVue from 'portal-vue'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 Vue.config.productionTip = false
 
@@ -14,23 +14,21 @@ if (process.env.MIX_APP_ENV === 'production') {
 Vue.mixin({ methods: { route: (...args) => window.route(...args).url() } })
 
 Vue.filter('formatDatetime', (datetime, format = 'MMMM D, YYYY HH:mm') => {
-   const momentObj = moment(datetime)
+   const dayObj = dayjs(datetime)
 
-   return momentObj.isValid() ? momentObj.format(format) : ''
+   return dayObj.isValid() ? dayObj.format(format) : ''
 })
 
-Vue.use(Inertia)
+Vue.use(InertiaApp)
 Vue.use(PortalVue)
 
 let app = document.getElementById('app')
 
 new Vue({
-  render: h => h(Inertia, {
+  render: h => h(InertiaApp, {
     props: {
       initialPage: JSON.parse(app.dataset.page),
-      resolveComponent: (name) => {
-        return import(`@/Pages/${name}`).then(module => module.default)
-      },
+      resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
     },
   })
 }).$mount(app)

@@ -29,11 +29,14 @@ import range from 'lodash/range'
 import upperFirst from 'lodash/upperFirst'
 import padStart from 'lodash/padStart'
 import isEqual from 'lodash/isEqual'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
 import Popper from 'popper.js'
 import cronstrue from 'cronstrue'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
+
+dayjs.extend(weekday)
 
 export default {
   inheritAttrs: false,
@@ -77,7 +80,7 @@ export default {
       const weekdays = {}
 
       range(7).forEach(i => {
-        const day = moment(i, 'e').startOf('week').isoWeekday(i + 1)
+        const day = dayjs().startOf('week').add(i, 'day')
         const key = day.format('ddd').toUpperCase()
 
         weekdays[key] = day.format('dddd')

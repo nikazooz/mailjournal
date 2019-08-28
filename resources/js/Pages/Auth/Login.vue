@@ -58,7 +58,6 @@ export default {
   props: {
     errors: Object
   },
-  inject: ['page'],
   data() {
     return {
       sending: false,
@@ -71,7 +70,7 @@ export default {
   },
   computed: {
     appName() {
-      return this.page.props.app.name
+      return this.$page.app.name
     }
   },
   methods: {

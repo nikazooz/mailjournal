@@ -14,7 +14,6 @@
 
 <script>
 export default {
-  inject: ['page'],
   props: {
     title: String
   },
@@ -28,7 +27,7 @@ export default {
   },
   methods: {
     updatePageTitle(title) {
-      document.title = title ? `${title} | ${this.page.props.app.name}` : this.page.props.app.name
+      document.title = title ? `${title} | ${this.$page.app.name}` : this.$page.app.name
     }
   }
 }

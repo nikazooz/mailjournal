@@ -1,6 +1,5 @@
 module.exports = {
   theme: {
-    // Some useful comment
     extend: {
       width: {
         '56': '14rem',
@@ -21,10 +20,6 @@ module.exports = {
       }
     }
   },
-  variants: {
-    // Some useful comment
-  },
-  plugins: [
-    // Some useful comment
-  ]
+  variants: {},
+  plugins: []
 }

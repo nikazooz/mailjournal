@@ -24,10 +24,10 @@ mix.js('resources/js/app.js', 'public/js')
     tailwindcss('./tailwind.config.js')
   ])
   .webpackConfig({
-    output: { chunkFilename: 'js/[name].[contenthash].js' },
+    output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.runtime.js',
+        'vue$': 'vue/dist/vue.runtime.esm.js',
         '@': path.resolve('resources/js'),
       },
     },
@@ -36,3 +36,4 @@ mix.js('resources/js/app.js', 'public/js')
     whitelistPatternsChildren: [/^nprogress$/]
   })
   .version()
+

@@ -21,7 +21,7 @@ trait ShowsErrorPageUsingInertia
         $inertiaResponse = Inertia::render('Error', [
             'code' => $statusCode,
             'message' => $this->responseStatusText($statusCode),
-        ]);
+        ])->toResponse(request());
 
         if (! $inertiaResponse instanceof Response) {
             return new Response($inertiaResponse, $statusCode);

@@ -19,7 +19,7 @@
             <dropdown class="mt-1" placement="bottom-end">
               <div class="flex items-center cursor-pointer select-none group">
                 <div class="text-gray-800 group-hover:text-green-600 focus:text-green-600 mr-1 whitespace-no-wrap">
-                  <span>{{ page.props.auth.user.name }}</span>
+                  <span>{{ $page.auth.user.name }}</span>
                 </div>
                 <icon class="w-5 h-5 group-hover:fill-green-600 fill-gray-800 focus:fill-green-600" name="cheveron-down" />
               </div>
@@ -53,7 +53,6 @@ export default {
     Icon,
     MainMenu
   },
-  inject: ['page'],
   props: {
     title: String
   },
@@ -73,7 +72,7 @@ export default {
   },
   methods: {
     updatePageTitle(title) {
-      document.title = title ? `${title} | ${this.page.props.app.name}` : this.page.props.app.name
+      document.title = title ? `${title} | ${this.$page.app.name}` : this.$page.app.name
     },
     hideDropdownMenus() {
       this.showUserMenu = false

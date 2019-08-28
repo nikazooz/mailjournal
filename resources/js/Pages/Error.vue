@@ -7,7 +7,6 @@
 
 <script>
 export default {
-  inject: ['page'],
   watch: {
     code() {
       this.updatePageTitle(this.message)
@@ -15,10 +14,10 @@ export default {
   },
   computed: {
     code() {
-      return this.page.props.code
+      return this.$page.code
     },
     message() {
-      return this.page.props.message
+      return this.$page.message
     }
   },
   mounted() {
@@ -26,7 +25,7 @@ export default {
   },
   methods: {
     updatePageTitle(title) {
-      document.title = title ? `${title} | ${this.page.props.app.name}` : this.page.props.app.name
+      document.title = title ? `${title} | ${this.$page.app.name}` : this.$page.app.name
     }
   }
 }

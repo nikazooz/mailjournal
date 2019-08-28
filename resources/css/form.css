@@ -10,7 +10,7 @@
   &:focus,
   &.focus {
     @apply .border-green-500;
-    box-shadow: 0 0 0 1px theme('colors.green-500');
+    box-shadow: 0 0 0 1px theme('colors.green.500');
   }
 
   &::placeholder {
@@ -41,6 +41,6 @@
   @apply .border-red-400;
 
   &:focus {
-    box-shadow: 0 0 0 1px theme('colors.red');
+    box-shadow: 0 0 0 1px theme('colors.red.500');
   }
 }

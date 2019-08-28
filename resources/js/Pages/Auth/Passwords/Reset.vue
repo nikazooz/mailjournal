@@ -34,7 +34,6 @@ export default {
     token: String,
     email: String
   },
-  inject: ['page'],
   data() {
     return {
       sending: false,
