@@ -34,8 +34,8 @@ class SendDueQuestions implements ShouldQueue
      */
     public function handle()
     {
-        Question::chunk(300, function ($questions) {
-            $questions->filter->isDue($this->now)->each->send();
-        });
+        Question::due($this->now)->each(function ($question) {
+            $question->send();
+        }, 300);
     }
 }

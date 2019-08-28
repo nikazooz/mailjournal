@@ -29,7 +29,7 @@ class SendScheduledQuestionsTest extends TestCase
      */
     public function questions_are_sent_via_the_email_on_schedule()
     {
-        Date::setTestNow(Date::createFromFormat('H:i', '13:00'));
+        Date::setTestNow(Date::createFromFormat('H:i', '13:00')->addDay());
 
         $this->artisan('schedule:run');
 
@@ -44,7 +44,7 @@ class SendScheduledQuestionsTest extends TestCase
      */
     public function questions_are_not_sent_when_its_not_their_time()
     {
-        Date::setTestNow(Date::createFromFormat('H:i', '13:01'));
+        Date::setTestNow(Date::createFromFormat('H:i', '12:59'));
 
         $this->artisan('schedule:run');
 
@@ -56,11 +56,13 @@ class SendScheduledQuestionsTest extends TestCase
      */
     public function multiple_questions_can_be_processed()
     {
+        Date::setTestNow(Date::createFromFormat('Y-m-d H:i', '2019-08-28 10:00')->setTimezone('UTC'));
+
         $question1 = tap(factory(Question::class)->make(['timezone' => 'UTC'])->daily()->at('13:00'))->save();
         $question2 = tap(factory(Question::class)->make(['timezone' => 'CET'])->daily()->at('14:00'))->save();
-        $question3 = tap(factory(Question::class)->make(['timezone' => 'CET'])->daily()->at('13:00'))->save();
+        $question3 = tap(factory(Question::class)->make(['timezone' => 'CET'])->daily()->at('15:00'))->save();
 
-        Date::setTestNow(Date::createFromFormat('H:i', '13:00')->setTimezone('UTC'));
+        Date::setTestNow(Date::createFromFormat('Y-m-d H:i', '2019-08-28 13:00')->setTimezone('UTC'));
 
         $this->artisan('schedule:run');
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DateTimeInterface;
 use Cron\CronExpression;
 use App\Mail\QuestionEmail;
 use Carbon\CarbonInterface;
@@ -27,6 +28,15 @@ class Question extends Model implements HasTimezonePreference
      * @var array
      */
     protected $fillable = ['user_id', 'message', 'expression', 'timezone'];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'next_run_at' => 'datetime',
+    ];
 
     /**
      * The user that scheduled the question.
@@ -63,6 +73,18 @@ class Question extends Model implements HasTimezonePreference
     }
 
     /**
+     * Scope the query to get only questions defined by the given User.
+     *
+     * @param  Builder  $query
+     * @param  CarbonInterface  $now
+     * @return void
+     */
+    public function scopeDue(Builder $query, CarbonInterface $now)
+    {
+        $query->where('next_run_at', '<=', $now);
+    }
+
+    /**
      * Get the preferred timezone of the entity.
      *
      * @return string|null
@@ -82,6 +104,8 @@ class Question extends Model implements HasTimezonePreference
         return DB::transaction(function () {
             $entry = $this->createEntry();
 
+            $this->fillNextRunDate()->save();
+
             Mail::to($this->user)->send(new QuestionEmail($entry));
 
             return $entry;
@@ -100,18 +124,45 @@ class Question extends Model implements HasTimezonePreference
         ])->setRelation('question', $this);
     }
 
-     /**
-     * Determine if the question should sent based on the Cron expression.
+    /**
+     * Save the datetime when question should be sent next time.
      *
-     * @param  CarbonInterface  $date
-     * @return bool
+     * @param  bool  $allowCurrentDate
+     * @param  CarbonInterface|null  $now
+     * @return void
      */
-    public function isDue(CarbonInterface $date): bool
+    public function fillNextRunDate($allowCurrentDate = false, CarbonInterface $now = null)
     {
-        if ($timezone = $this->preferredTimezone()) {
-            $date = $date->setTimezone($timezone);
-        }
+        $this->next_run_at = $this->calculateNextRunDate($now ?? Date::now(), $allowCurrentDate);
 
-        return CronExpression::factory($this->expression)->isDue($date);
+        return $this;
+    }
+
+    /**
+     * Determine when the question should be sent next time.
+     *
+     * @param  CarbonInterface  $now
+     * @param  bool  $allowCurrentDate
+     * @return DateTimeInterface
+     */
+    public function calculateNextRunDate(CarbonInterface $now, $allowCurrentDate = false): DateTimeInterface
+    {
+        return Date::make(CronExpression::factory($this->expression)->getNextRunDate(
+            $now->setTimeZone($this->preferredTimezone()), 0, $allowCurrentDate
+        ))->setTimeZone('UTC');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->fillNextRunDate(true);
+        });
     }
 }
