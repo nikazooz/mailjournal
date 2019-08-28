@@ -14,7 +14,7 @@
           <cron-input v-model="form.expression" class="mb-8 w-full" :errors="errors.expression" label="Recurrence" />
           <select-input v-model="form.timezone" class="w-full" :errors="errors.timezone" label="Timezone">
             <option :value="null">Default</option>
-            <option :value="timezone" v-for="timezone in timezones">{{ timezone }}</option>
+            <option :value="timezone" v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
           </select-input>
         </div>
         <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex items-center">

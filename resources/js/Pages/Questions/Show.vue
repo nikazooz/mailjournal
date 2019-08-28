@@ -42,7 +42,7 @@
           <tr v-if="!entries.data.length">
             <td class="border-t px-6 py-4" colspan="4">No replies found.</td>
           </tr>
-          <tr v-for="entry in entries.data" v-else class="hover:bg-gray-200 focus-within:bg-gray-200">
+          <tr v-for="entry in entries.data" :key="entry.id" v-else class="hover:bg-gray-200 focus-within:bg-gray-200">
             <td class="border-t">
               <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
                 {{ entry.question_sent_at | formatDatetime }}
