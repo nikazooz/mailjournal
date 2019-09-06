@@ -21,8 +21,7 @@ class SendScheduledQuestionsTest extends TestCase
         Mail::fake();
         EmailInbox::fake();
 
-        $this->question = factory(Question::class)->make()->daily()->at('13:00');
-        $this->question->save();
+        $this->question = $this->createQuestion();
     }
     /**
      * @test
@@ -77,5 +76,24 @@ class SendScheduledQuestionsTest extends TestCase
         Mail::assertNotQueued(QuestionEmail::class, function ($mailable) use ($question3) {
             return $mailable->hasTo($question3->user->email);
         });
+    }
+
+    /** @test */
+    public function question_is_not_sent_duplicated()
+    {
+        Date::setTestNow(Date::createFromFormat('H:i:s', '13:00:00')->addDay());
+
+        $this->artisan('schedule:run');
+
+        Date::setTestNow(Date::now()->addSeconds(40));
+
+        $this->artisan('schedule:run');
+
+        Mail::assertQueued(QuestionEmail::class, 1);
+    }
+
+    protected function createQuestion()
+    {
+        return tap(factory(Question::class)->make()->daily()->at('13:00'))->save();
     }
 }

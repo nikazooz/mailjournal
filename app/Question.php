@@ -161,8 +161,12 @@ class Question extends Model implements HasTimezonePreference
     {
         parent::boot();
 
-        static::saving(function ($model) {
+        static::creating(function ($model) {
             $model->fillNextRunDate(true);
+        });
+
+        static::updating(function ($model) {
+            $model->fillNextRunDate();
         });
     }
 }
