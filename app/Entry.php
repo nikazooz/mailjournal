@@ -84,9 +84,13 @@ class Entry extends Model
      */
     public function date(): ?DateTimeInterface
     {
-        if ($date = $this->inboundEmail()->date()) {
-            return $date->setTimezone($this->question->preferredTimezone());
+        $date = $this->inboundEmail()->date();
+
+        if (!$date) {
+            return null;
         }
+
+        return $date->setTimezone($this->question->preferredTimezone());
     }
 
     /**
