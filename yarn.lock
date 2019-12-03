@@ -1634,6 +1634,11 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
+collect.js@^4.12.8:
+  version "4.18.9"
+  resolved "https://registry.yarnpkg.com/collect.js/-/collect.js-4.18.9.tgz#a4d3610232fadd2c0830ded711cb5f29011bc833"
+  integrity sha512-/ocqUYqJFIRZo9mmY6NkdV/VGJnheSKhQ2OQm8X8r9AbxPoShQtvzyYHRQ057XuB9U9rywBfwYEBhnlSq8uQxA==
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -2113,10 +2118,10 @@ date-now@^0.1.4:
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
 
-dayjs@^1.8.16:
-  version "1.8.16"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.16.tgz#2a3771de537255191b947957af2fd90012e71e64"
-  integrity sha512-XPmqzWz/EJiaRHjBqSJ2s6hE/BUoCIHKgdS2QPtTQtKcS9E4/Qn0WomoH1lXanWCzri+g7zPcuNV4aTZ8PMORQ==
+dayjs@^1.8.17:
+  version "1.8.17"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.17.tgz#53ec413f2a7b02afbea1846d61bb260fa8567cea"
+  integrity sha512-47VY/htqYqr9GHd7HW/h56PpQzRBSJcxIQFwqL3P20bMF/3az5c3PWdVY3LmPXFl6cQCYHL7c79b9ov+2bOBbw==
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -3993,10 +3998,10 @@ laravel-mix-purgecss@^4.1.0:
     glob-all "^3.1.0"
     purgecss-webpack-plugin "^1.3.0"
 
-laravel-mix@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/laravel-mix/-/laravel-mix-4.1.2.tgz#eaf9999f030d2d45614a83457e0ee3b6f243b56d"
-  integrity sha512-nA+JME+59hWI5u+r3VfPfmpUj8CxlNmNsvslBOUtUwRc1K2Wq55uAPUtTLgAp7n5JngF3O7qFN3LcTCVO/SpZQ==
+laravel-mix@^5.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/laravel-mix/-/laravel-mix-5.0.0.tgz#7150fe26e1a4eca0d8a782cadfd8005a49bb1ee7"
+  integrity sha512-QpsVoM6zGa83E5AUMwOmi4wKdYfJMaW1jIpJ1CCL74abOHj1ne25njBQ4detO41GAjIkZIkrmwECEcOebC8+3Q==
   dependencies:
     "@babel/core" "^7.2.0"
     "@babel/plugin-proposal-object-rest-spread" "^7.2.0"
@@ -4009,6 +4014,7 @@ laravel-mix@^4.1.2:
     babel-merge "^2.0.1"
     chokidar "^2.0.3"
     clean-css "^4.1.3"
+    collect.js "^4.12.8"
     concatenate "0.0.2"
     css-loader "^1.0.1"
     dotenv "^6.2.0"
@@ -4021,7 +4027,7 @@ laravel-mix@^4.1.2:
     html-loader "^0.5.5"
     imagemin "^6.0.0"
     img-loader "^3.0.0"
-    lodash "^4.17.5"
+    lodash "^4.17.15"
     md5 "^2.2.1"
     optimize-css-assets-webpack-plugin "^5.0.1"
     postcss-loader "^3.0.0"
@@ -4029,7 +4035,7 @@ laravel-mix@^4.1.2:
     terser "^3.11.0"
     terser-webpack-plugin "^1.2.2"
     vue-loader "^15.4.2"
-    webpack "^4.27.1"
+    webpack "^4.36.1"
     webpack-cli "^3.1.2"
     webpack-dev-server "^3.1.14"
     webpack-merge "^4.1.0"
@@ -6579,10 +6585,10 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-tailwindcss@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.1.2.tgz#0107dc092c3edee6132b105d896b109c0f66afd6"
-  integrity sha512-mcTzZHXMipnQY9haB17baNJmBTkYYcC8ljfMdB9/97FfhKJIzlglJcyGythuQTOu7r/QIbLfZYYWZhAvaGj95A==
+tailwindcss@^1.1.3:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.1.4.tgz#786bd5faaf485c9eddcb821dd55666c56baa814e"
+  integrity sha512-p4AxVa4CKpX7IbNxImwNMGG9MHuLgratOaOE/iGriNd4AsRQRM2xMisoQ3KQHqShunrWuObga7rI7xbNsVoWGA==
   dependencies:
     autoprefixer "^9.4.5"
     bytes "^3.0.0"
@@ -7123,10 +7129,10 @@ webpack-sources@^1.1.0, webpack-sources@^1.3.0, webpack-sources@^1.4.0, webpack-
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.27.1:
-  version "4.39.3"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.3.tgz#a02179d1032156b713b6ec2da7e0df9d037def50"
-  integrity sha512-BXSI9M211JyCVc3JxHWDpze85CvjC842EvpRsVTc/d15YJGlox7GIDd38kJgWrb3ZluyvIjgenbLDMBQPDcxYQ==
+webpack@^4.36.1:
+  version "4.41.2"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.41.2.tgz#c34ec76daa3a8468c9b61a50336d8e3303dce74e"
+  integrity sha512-Zhw69edTGfbz9/8JJoyRQ/pq8FYUoY0diOXqW0T6yhgdhCv6wr0hra5DwwWexNRns2Z2+gsnrNcbe9hbGBgk/A==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
