@@ -52,7 +52,7 @@ class DefineScheduledQuestionTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post('/questions', $this->validParams())
             ->assertRedirect();
 
