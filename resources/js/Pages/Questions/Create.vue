@@ -14,7 +14,7 @@
 
           <select-input v-model="form.timezone" class="w-full" :errors="errors.timezone" label="Timezone">
             <option :value="null">Default</option>
-            <option :value="timezone" v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
+            <option v-for="timezone in timezones" :key="timezone" :value="timezone">{{ timezone }}</option>
           </select-input>
         </div>
         <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex justify-end items-center">
@@ -44,8 +44,8 @@ export default {
     timezones: Array,
     errors: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   remember: 'form',
   data() {
@@ -54,8 +54,9 @@ export default {
       form: {
         message: null,
         expression: '0 0 * * *',
-        timezone: null
-      }
+        timezone: null,
+        enabled: true,
+      },
     }
   },
   watch: {
@@ -63,8 +64,8 @@ export default {
       deep: true,
       handler(form) {
         return this.$inertia.remember(form, 'question')
-      }
-    }
+      },
+    },
   },
   methods: {
     submit() {

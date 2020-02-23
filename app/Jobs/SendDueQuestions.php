@@ -34,7 +34,7 @@ class SendDueQuestions implements ShouldQueue
      */
     public function handle()
     {
-        Question::due($this->now)->each(function ($question) {
+        Question::due($this->now)->enabled()->each(function (Question $question) {
             $question->send();
         }, 300);
     }

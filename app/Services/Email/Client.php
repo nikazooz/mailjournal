@@ -2,8 +2,6 @@
 
 namespace App\Services\Email;
 
-use Illuminate\Support\Collection;
-
 interface Client
 {
     /**

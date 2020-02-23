@@ -4,13 +4,11 @@ namespace App\Providers;
 
 use Inertia\Inertia;
 use Cron\CronExpression;
-use OpenPsa\Ranger\Ranger;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\UrlWindow;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -46,7 +44,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->registerLengthAwarePaginator();
-        $this->registerCarbonMarcos();
     }
 
     protected function registerLengthAwarePaginator()
@@ -118,16 +115,6 @@ class AppServiceProvider extends ServiceProvider
                     ]);
                 }
             };
-        });
-    }
-
-    protected function registerCarbonMarcos()
-    {
-        CarbonImmutable::macro('range', function ($to) {
-            return (new Ranger('en'))->format(
-                $this->toDateString(),
-                $to->toDateString()
-            );
         });
     }
 

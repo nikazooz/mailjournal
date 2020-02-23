@@ -1,6 +1,6 @@
 <template>
   <layout title="Dashboard">
-    <div class="bg-blue-100 border-l-4 border-blue-400 text-blue-700 p-4 mb-8" role="alert" v-if="status">
+    <div v-if="status" class="bg-blue-100 border-l-4 border-blue-400 text-blue-700 p-4 mb-8" role="alert">
       <p>{{ status }}</p>
     </div>
 
@@ -8,9 +8,9 @@
 
     <p class="mb-12 leading-normal">Hey there! Welcome to MailJournal, an app that allows you to schedule questions and make a journal by responding to them.</p>
 
-    <h2 class="mb-8 font-bold text-3xl" v-if="entries.length">Latest Entries</h2>
+    <h2 v-if="entries.length" class="mb-8 font-bold text-3xl">Latest Entries</h2>
 
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto" v-if="entries.length">
+    <div v-if="entries.length" class="mt-6 bg-white rounded shadow overflow-x-auto">
       <table class="w-full whitespace-no-wrap">
         <thead>
           <tr class="text-left font-bold">
@@ -24,13 +24,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="entry in entries" class="hover:bg-gray-200 focus-within:bg-gray-200">
+          <tr v-for="entry in entries" :key="entry.id" class="hover:bg-gray-200 focus-within:bg-gray-200">
             <td class="border-t px-6 py-4">{{ entry.question_sent_at | formatDatetime }}</td>
 
             <td class="border-t px-6 py-4">
               <inertia-link :href="route('questions.show', entry.question_id)" class="text-blue-500 hover:text-blue-600 underline">{{ entry.question_message }}</inertia-link>
             </td>
 
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <td class="border-t px-6 py-4" v-html="entry.reply" />
 
             <td class="border-t px-6 py-4">{{ entry.replied_at | formatDatetime }}</td>
@@ -54,11 +55,11 @@ import Icon from '@/Shared/Icon'
 export default {
   components: {
     Layout,
-    Icon
+    Icon,
   },
   props: {
     entries: Array,
-    status: String
-  }
+    status: String,
+  },
 }
 </script>

@@ -92,6 +92,18 @@ class SendScheduledQuestionsTest extends TestCase
         Mail::assertQueued(QuestionEmail::class, 1);
     }
 
+    /** @test */
+    public function disabled_questions_are_not_sent()
+    {
+        $this->question->update(['enabled' => false]);
+
+        Date::setTestNow(Date::createFromFormat('H:i', '13:00')->addDay());
+
+        $this->artisan('schedule:run');
+
+        Mail::assertNotQueued(QuestionEmail::class);
+    }
+
     protected function createQuestion()
     {
         return tap(factory(Question::class)->make()->daily()->at('13:00'))->save();

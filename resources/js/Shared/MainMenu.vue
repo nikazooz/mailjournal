@@ -20,7 +20,7 @@ import Icon from '@/Shared/Icon'
 
 export default {
   components: {
-    Icon
+    Icon,
   },
   methods: {
     isUrl(...urls) {
@@ -29,7 +29,7 @@ export default {
       }
 
       return urls.filter(url => location.pathname.substr(1).startsWith(url)).length
-    }
-  }
+    },
+  },
 }
 </script>

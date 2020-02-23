@@ -9,10 +9,10 @@
         <div class="mx-auto mt-6 w-24 border-b-2" />
 
         <text-input
+          v-model="form.email"
           type="email"
           name="email"
           class="mt-10"
-          v-model="form.email"
           label="Email"
           :errors="errors.email"
           autocapitalize="off"
@@ -20,16 +20,16 @@
         />
 
         <text-input
+          v-model="form.password"
           type="password"
           name="password"
           class="mt-6"
-          v-model="form.password"
           label="Password"
           :errors="errors.password"
         />
 
         <label class="mt-6 select-none flex items-center" for="remember">
-          <input id="remember" type="checkbox" name="remember" class="mr-1" v-model="form.remember">
+          <input id="remember" v-model="form.remember" type="checkbox" name="remember" class="mr-1">
 
           <span class="text-sm">Remember Me</span>
         </label>
@@ -53,10 +53,10 @@ export default {
   components: {
     AuthLayout,
     LoadingButton,
-    TextInput
+    TextInput,
   },
   props: {
-    errors: Object
+    errors: Object,
   },
   data() {
     return {
@@ -64,14 +64,14 @@ export default {
       form: {
         email: null,
         password: null,
-        remember: null
-      }
+        remember: null,
+      },
     }
   },
   computed: {
     appName() {
       return this.$page.app.name
-    }
+    },
   },
   methods: {
     submit() {
@@ -79,7 +79,7 @@ export default {
       this.$inertia.post(this.route('login'), this.form).then(() => {
         this.sending = false
       })
-    }
-  }
+    },
+  },
 }
 </script>

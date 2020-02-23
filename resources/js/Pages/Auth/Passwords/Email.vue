@@ -4,7 +4,7 @@
       <div class="px-10 py-12">
         <h1 class="text-center font-bold text-3xl">Reset Password</h1>
 
-        <div class="bg-blue-100 border-l-4 border-blue-400 text-blue-700 p-4 mt-6" role="alert" v-if="status">
+        <div v-if="status" class="bg-blue-100 border-l-4 border-blue-400 text-blue-700 p-4 mt-6" role="alert">
           <p>{{ status }}</p>
         </div>
 
@@ -27,18 +27,18 @@ export default {
   components: {
     AuthLayout,
     LoadingButton,
-    TextInput
+    TextInput,
   },
   props: {
     errors: Object,
-    status: String
+    status: String,
   },
   data() {
     return {
       sending: false,
       form: {
-        email: null
-      }
+        email: null,
+      },
     }
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
       this.$inertia.post(this.route('password.email'), this.form).then(() => {
         this.sending = false
       })
-    }
-  }
+    },
+  },
 }
 </script>

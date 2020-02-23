@@ -2,7 +2,7 @@
 
 namespace App;
 
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Illuminate\Support\HtmlString;
 use App\Services\Email\InboundEmail;
 use Stevebauman\Purify\Facades\Purify;
@@ -80,9 +80,9 @@ class Entry extends Model
     /**
      * Get date the entry was sent at.
      *
-     * @return DateTimeInterface|null
+     * @return CarbonInterface|null
      */
-    public function date(): ?DateTimeInterface
+    public function date(): ?CarbonInterface
     {
         $date = $this->inboundEmail()->date();
 
@@ -96,9 +96,9 @@ class Entry extends Model
     /**
      * Get datetime when the questions was sent.
      *
-     * @return DateTimeInterface
+     * @return CarbonInterface
      */
-    public function sentAt(): DateTimeInterface
+    public function sentAt(): CarbonInterface
     {
         return $this->created_at->setTimezone($this->question->preferredTimezone());
     }

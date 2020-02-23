@@ -12,10 +12,13 @@
         <div class="p-8 flex flex-wrap">
           <text-input v-model="form.message" class="mb-8 w-full" :errors="errors.message" label="Message" />
           <cron-input v-model="form.expression" class="mb-8 w-full" :errors="errors.expression" label="Recurrence" />
-          <select-input v-model="form.timezone" class="w-full" :errors="errors.timezone" label="Timezone">
+          <select-input v-model="form.timezone" class="mb-8 w-full" :errors="errors.timezone" label="Timezone">
             <option :value="null">Default</option>
-            <option :value="timezone" v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
+            <option v-for="timezone in timezones" :key="timezone" :value="timezone">{{ timezone }}</option>
           </select-input>
+          <label for="enabled">
+            <input id="enabled" v-model="form.enabled" name="enabled" type="checkbox"> Enabled
+          </label>
         </div>
         <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex items-center">
           <loading-button :loading="sending" class="btn-green ml-auto" type="submit">Update Question</loading-button>
@@ -38,18 +41,18 @@ export default {
     LoadingButton,
     CronInput,
     SelectInput,
-    TextInput
+    TextInput,
   },
   props: {
     question: {
       type: Object,
-      required: true
+      required: true,
     },
     timezones: Array,
     errors: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -57,8 +60,9 @@ export default {
       form: {
         message: this.question.message,
         expression: this.question.expression,
-        timezone: this.question.timezone
-      }
+        timezone: this.question.timezone,
+        enabled: this.question.enabled,
+      },
     }
   },
   methods: {
@@ -67,7 +71,7 @@ export default {
       this.$inertia.put(this.route('questions.update', this.question.id), this.form).then(() => {
         this.sending = false
       })
-    }
-  }
+    },
+  },
 }
 </script>

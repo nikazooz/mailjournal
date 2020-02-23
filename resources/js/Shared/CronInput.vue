@@ -26,12 +26,11 @@
 
 <script>
 import range from 'lodash/range'
-import upperFirst from 'lodash/upperFirst'
 import padStart from 'lodash/padStart'
 import isEqual from 'lodash/isEqual'
 import dayjs from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
-import Popper from 'popper.js'
+import { createPopper } from '@popperjs/core'
 import cronstrue from 'cronstrue'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
@@ -39,17 +38,17 @@ import TextInput from '@/Shared/TextInput'
 dayjs.extend(weekday)
 
 export default {
-  inheritAttrs: false,
   components: {
     SelectInput,
-    TextInput
+    TextInput,
   },
+  inheritAttrs: false,
   props: {
     id: {
       type: String,
       default() {
         return `text-input-${this._uid}`
-      }
+      },
     },
     type: {
       type: String,
@@ -60,19 +59,19 @@ export default {
     error: String,
     placement: {
       type: String,
-      default: 'bottom-end'
+      default: 'bottom-end',
     },
     boundary: {
       type: String,
-      default: 'scrollParent'
-    }
+      default: 'scrollParent',
+    },
   },
   data() {
     return {
       show: false,
       daysOfWeek: [],
       dayOfMonth: '*',
-      time: '00:00'
+      time: '00:00',
     }
   },
   computed: {
@@ -90,7 +89,7 @@ export default {
     },
     monthdays () {
       const monthdays = {
-        '*': 'Any'
+        '*': 'Any',
       }
 
       range(31).forEach(i => {
@@ -110,17 +109,17 @@ export default {
     },
     minutes() {
       return parseInt(this.time.split(':')[1])
-    }
+    },
   },
   watch: {
     show(show) {
       if (show) {
         this.$nextTick(() => {
-          this.popper = new Popper(this.$el, this.$refs.dropdown, {
+          this.popper = createPopper(this.$el, this.$refs.dropdown, {
             placement: this.placement,
             modifiers: {
               preventOverflow: { boundariesElement: this.boundary },
-            }
+            },
           })
         })
       } else if (this.popper) {
@@ -138,7 +137,7 @@ export default {
     },
     time() {
       this.emitInput()
-    }
+    },
   },
   created() {
     this.parseCron(this.value)
@@ -189,7 +188,7 @@ export default {
       this.time = `${hours}:${minutes}`
       this.dayOfMonth = dayOfMonth
       this.daysOfWeek = daysOfWeek
-    }
-  }
+    },
+  },
 }
 </script>

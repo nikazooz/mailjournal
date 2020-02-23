@@ -6,10 +6,13 @@ use App\Entry;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class DashboardController extends Controller
 {
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
     public function index(Request $request)
     {
         return Inertia::render('Dashboard/Index', [

@@ -51,15 +51,15 @@ export default {
   components: {
     Dropdown,
     Icon,
-    MainMenu
+    MainMenu,
   },
   props: {
-    title: String
+    title: String,
   },
   data() {
     return {
       showUserMenu: false,
-      accounts: null
+      accounts: null,
     }
   },
   watch: {
@@ -76,7 +76,7 @@ export default {
     },
     hideDropdownMenus() {
       this.showUserMenu = false
-    }
-  }
+    },
+  },
 }
 </script>

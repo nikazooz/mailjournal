@@ -4,6 +4,7 @@ namespace App\Services\Email;
 
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Mail;
 use Psr\Http\Message\StreamInterface;
@@ -12,7 +13,6 @@ use Illuminate\Contracts\Mail\Mailable;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Message as MimeMessage;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
-use ZBateson\MailMimeParser\Message\Part\MessagePart;
 
 class InboundEmail
 {
@@ -34,7 +34,7 @@ class InboundEmail
 
     public function id(): string
     {
-        return $this->message()->getHeaderValue('Message-Id', str_random());
+        return $this->message()->getHeaderValue('Message-Id', Str::random());
     }
 
     public function date(): ?CarbonInterface
@@ -147,15 +147,6 @@ class InboundEmail
         }
 
         return Mail::to($this->from())->send($mailable);
-    }
-
-    public function forward($recipients)
-    {
-        return Mail::send([], [], function ($message) use ($recipients) {
-            $message->to($recipients)
-                ->subject($this->subject())
-                ->setBody($this->body(), $this->message()->getContentType());
-        });
     }
 
     public function body(): ?string

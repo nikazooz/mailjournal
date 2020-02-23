@@ -17,12 +17,16 @@
           <div id="expression" class="py-2 leading-normal block w-full text-gray-700 bg-white font-sans text-left appearance-none relative">{{ humanReadableExpression }}</div>
         </div>
 
-        <div class="w-full">
+        <div class="mb-8 w-full">
           <label class="form-label" for="timezone">Timezone:</label>
           <div id="timezone" class="py-2 leading-normal block w-full text-gray-700 bg-white font-sans text-left appearance-none relative">{{ question.timezone || 'Default' }}</div>
         </div>
+
+        <div class="w-full">
+          {{ question.enabled ? 'Enabled' : 'Disabled' }}
+        </div>
       </div>
-       <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex items-center">
+      <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex items-center">
         <button class="text-red-500 hover:underline" tabindex="-1" type="button" @click="destroy">Delete</button>
         <inertia-link :href="route('questions.edit', question.id)" class="btn-green ml-auto">Edit</inertia-link>
       </div>
@@ -35,20 +39,20 @@
             <th class="px-6 pt-6 pb-4">Sent At</th>
             <th class="px-6 pt-6 pb-4">Text</th>
             <th class="px-6 pt-6 pb-4">Replied At</th>
-            <th></th>
+            <th />
           </tr>
         </thead>
         <tbody>
           <tr v-if="!entries.data.length">
             <td class="border-t px-6 py-4" colspan="4">No replies found.</td>
           </tr>
-          <tr v-for="entry in entries.data" :key="entry.id" v-else class="hover:bg-gray-200 focus-within:bg-gray-200">
+          <tr v-for="entry in entries.data" v-else :key="entry.id" class="hover:bg-gray-200 focus-within:bg-gray-200">
             <td class="border-t">
               <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
                 {{ entry.question_sent_at | formatDatetime }}
               </inertia-link>
             </td>
-            <td class="border-t" >
+            <td class="border-t">
               <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1" v-html="entry.reply" />
             </td>
             <td class="border-t">
@@ -73,19 +77,13 @@
 import cronstrue from 'cronstrue'
 import Icon from '@/Shared/Icon'
 import Layout from '@/Shared/Layout'
-import LoadingButton from '@/Shared/LoadingButton'
 import Pagination from '@/Shared/Pagination'
-import SelectInput from '@/Shared/SelectInput'
-import TextInput from '@/Shared/TextInput'
 
 export default {
   components: {
     Icon,
     Layout,
-    LoadingButton,
     Pagination,
-    SelectInput,
-    TextInput
   },
   props: {
     question: Object,
@@ -94,7 +92,7 @@ export default {
   computed: {
     humanReadableExpression() {
       return cronstrue.toString(this.question.expression)
-    }
+    },
   },
   methods: {
     destroy() {
@@ -103,10 +101,10 @@ export default {
       }
     },
     trimString(value, charCount = 50) {
-      const segment = value.substring(0, 50)
+      const segment = value.substring(0, charCount)
 
       return segment === value ? segment : `${segment}...`
-    }
-  }
+    },
+  },
 }
 </script>

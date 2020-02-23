@@ -16,13 +16,13 @@
           <div id="message" class="py-2 leading-normal block w-full text-gray-700 bg-white font-sans text-left appearance-none relative">{{ entry.question_sent_at | formatDatetime }}</div>
         </div>
         <div class="mb-8 w-full">
-           <label class="form-label" for="message">Replied At:</label>
+          <label class="form-label" for="message">Replied At:</label>
           <div id="message" class="py-2 leading-normal block w-full text-gray-700 bg-white font-sans text-left appearance-none relative">{{ entry.replied_at | formatDatetime }}</div>
         </div>
 
         <div class="w-full">
           <label class="form-label" for="timezone">Reply:</label>
-          <div id="timezone" class="p-2 leading-normal block w-full text-gray-700 bg-white font-sans text-left appearance-none relative border rounded" v-html="entry.reply"></div>
+          <div id="timezone" class="p-2 leading-normal block w-full text-gray-700 bg-white font-sans text-left appearance-none relative border rounded" v-html="entry.reply" />
         </div>
       </div>
     </div>
@@ -34,13 +34,13 @@ import Layout from '@/Shared/Layout'
 
 export default {
   components: {
-    Layout
+    Layout,
   },
   props: {
     entry: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

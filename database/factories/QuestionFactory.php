@@ -9,5 +9,6 @@ $factory->define(Question::class, function (Faker $faker) {
         'user_id' => factory(User::class),
         'message' => $faker->sentence,
         'expression' => '* * * * *',
+        'enabled' => true,
     ];
 });

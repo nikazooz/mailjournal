@@ -26,8 +26,8 @@ export default {
     },
     autosize: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   mounted() {
     if (this.autosize) {
@@ -40,7 +40,7 @@ export default {
     },
     select() {
       this.$refs.input.select()
-    }
-  }
+    },
+  },
 }
 </script>

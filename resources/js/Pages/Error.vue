@@ -7,11 +7,6 @@
 
 <script>
 export default {
-  watch: {
-    code() {
-      this.updatePageTitle(this.message)
-    }
-  },
   computed: {
     code() {
       return this.$page.code
@@ -20,13 +15,18 @@ export default {
       return this.$page.message
     }
   },
+  watch: {
+    code() {
+      this.updatePageTitle(this.message)
+    },
+  },
   mounted() {
     this.updatePageTitle(this.message)
   },
   methods: {
     updatePageTitle(title) {
       document.title = title ? `${title} | ${this.$page.app.name}` : this.$page.app.name
-    }
-  }
+    },
+  },
 }
 </script>

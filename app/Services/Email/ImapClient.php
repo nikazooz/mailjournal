@@ -3,9 +3,8 @@
 namespace App\Services\Email;
 
 use Psr\Log\LoggerInterface;
-use Zend\Mail\Protocol\Imap;
+use Laminas\Mail\Protocol\Imap;
 use Illuminate\Support\Collection;
-use ZBateson\MailMimeParser\Message as ParsedMessage;
 
 class ImapClient implements Client
 {

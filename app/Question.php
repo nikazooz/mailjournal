@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use App\Contracts\HasTimezonePreference;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Console\Scheduling\ManagesFrequencies;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +26,7 @@ class Question extends Model implements HasTimezonePreference
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'message', 'expression', 'timezone'];
+    protected $fillable = ['user_id', 'message', 'expression', 'timezone', 'enabled'];
 
     /**
      * The attributes that should be cast to native types.
@@ -36,6 +35,7 @@ class Question extends Model implements HasTimezonePreference
      */
     protected $casts = [
         'next_run_at' => 'datetime',
+        'enabled' => 'boolean',
     ];
 
     /**
@@ -82,6 +82,17 @@ class Question extends Model implements HasTimezonePreference
     public function scopeDue(Builder $query, CarbonInterface $now)
     {
         $query->where('next_run_at', '<=', $now);
+    }
+
+    /**
+     * Scope the query to get only enabled questions.
+     *
+     * @param  Builder  $query
+     * @return void
+     */
+    public function scopeEnabled(Builder $query)
+    {
+        $query->where('enabled', true);
     }
 
     /**
@@ -143,9 +154,9 @@ class Question extends Model implements HasTimezonePreference
      *
      * @param  CarbonInterface  $now
      * @param  bool  $allowCurrentDate
-     * @return DateTimeInterface
+     * @return CarbonInterface
      */
-    public function calculateNextRunDate(CarbonInterface $now, $allowCurrentDate = false): DateTimeInterface
+    public function calculateNextRunDate(CarbonInterface $now, $allowCurrentDate = false): CarbonInterface
     {
         return Date::make(CronExpression::factory($this->expression)->getNextRunDate(
             $now->setTimeZone($this->preferredTimezone()), 0, $allowCurrentDate

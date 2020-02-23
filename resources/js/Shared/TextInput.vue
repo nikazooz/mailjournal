@@ -14,7 +14,7 @@ export default {
       type: String,
       default() {
         return `text-input-${this._uid}`
-      }
+      },
     },
     type: {
       type: String,
@@ -24,8 +24,8 @@ export default {
     label: String,
     errors: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   methods: {
     focus() {
@@ -36,7 +36,7 @@ export default {
     },
     setSelectionRange(start, end) {
       this.$refs.input.setSelectionRange(start, end)
-    }
-  }
+    },
+  },
 }
 </script>

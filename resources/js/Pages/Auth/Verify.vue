@@ -5,7 +5,7 @@
 
       <div class="mx-auto mt-6 w-24 border-b-2" />
 
-      <div class="bg-blue-100 border-l-4 border-blue-400 text-blue-700 p-4 mt-6" role="alert" v-if="resent">
+      <div v-if="resent" class="bg-blue-100 border-l-4 border-blue-400 text-blue-700 p-4 mt-6" role="alert">
         <p>A fresh verification link has been sent to your email address.</p>
       </div>
 
@@ -23,10 +23,10 @@ import AuthLayout from '@/Shared/AuthLayout'
 
 export default {
   components: {
-    AuthLayout
+    AuthLayout,
   },
   props: {
-    resent: Boolean
-  }
+    resent: Boolean,
+  },
 }
 </script>

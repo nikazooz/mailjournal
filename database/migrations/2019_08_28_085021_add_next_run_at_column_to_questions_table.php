@@ -22,11 +22,9 @@ class AddNextRunAtColumnToQuestionsTable extends Migration
         $now = Date::now();
 
         // Update existing questions and fill the next run date based on
-        Question::chunkById(1000, function ($questions) use ($now) {
-            foreach ($questions as $question) {
-                $question->timestamps = false;
-                $question->fillNextRunDate(true, $now)->save();
-            }
+        Question::eachById(function ($question) use ($now) {
+            $question->timestamps = false;
+            $question->fillNextRunDate(true, $now)->save();
         });
     }
 

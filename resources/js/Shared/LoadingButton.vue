@@ -7,7 +7,7 @@
 <script>
 export default {
   props: {
-    loading: Boolean
-  }
+    loading: Boolean,
+  },
 }
 </script>

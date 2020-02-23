@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Entry;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 
 class EntriesController extends Controller
 {
+    /**
+     * @param  Entry  $entry
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
     public function show(Entry $entry)
     {
         $this->authorize($entry);

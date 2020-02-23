@@ -42,10 +42,10 @@ export default {
   components: {
     Icon,
     Layout,
-    Pagination
+    Pagination,
   },
   props: {
-    questions: Object
-  }
+    questions: Object,
+  },
 }
 </script>

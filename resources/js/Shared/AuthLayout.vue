@@ -15,12 +15,12 @@
 <script>
 export default {
   props: {
-    title: String
+    title: String,
   },
   watch: {
     title(title) {
       this.updatePageTitle(title)
-    }
+    },
   },
   mounted() {
     this.updatePageTitle(this.title)
@@ -28,7 +28,7 @@ export default {
   methods: {
     updatePageTitle(title) {
       document.title = title ? `${title} | ${this.$page.app.name}` : this.$page.app.name
-    }
-  }
+    },
+  },
 }
 </script>

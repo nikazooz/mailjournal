@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -42,7 +41,7 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Support\Responsable
      */
     public function showLoginForm()
     {

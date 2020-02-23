@@ -5,7 +5,6 @@ namespace App\Services\Email\Facades;
 use App\Services\Email\Client;
 use Illuminate\Support\Facades\Facade;
 use App\Services\Email\Testing\FakeClient;
-use App\Services\Email\Testing\InboundEmailFactory;
 
 class EmailInbox extends Facade
 {

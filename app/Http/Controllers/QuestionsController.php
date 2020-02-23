@@ -27,6 +27,7 @@ class QuestionsController extends Controller
                 'message' => $question->message,
                 'expression' => $question->expression,
                 'timezone' => $question->timezone,
+                'enabled' => $question->enabled,
             ],
             'entries' => $question->entries()->paginate(20, ['*'], 'entries_page')->transform(function ($entry) {
                 return [
@@ -52,6 +53,7 @@ class QuestionsController extends Controller
             'message' => ['required', 'string', 'max:191'],
             'expression' => ['required', 'string', 'cron_expression'],
             'timezone' => ['nullable', Rule::in(timezone_identifiers_list())],
+            'enabled' => ['boolean'],
         ]));
 
         return redirect()->route('questions.show', $question);
@@ -75,6 +77,7 @@ class QuestionsController extends Controller
             'message' => ['required', 'string', 'max:191'],
             'expression' => ['required', 'string', 'cron_expression'],
             'timezone' => ['nullable', Rule::in(timezone_identifiers_list())],
+            'enabled' => ['boolean'],
         ]));
 
         return redirect()->route('questions.show', $question);

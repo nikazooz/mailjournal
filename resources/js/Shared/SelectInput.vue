@@ -16,24 +16,24 @@ export default {
       type: String,
       default() {
         return `select-input-${this._uid}`
-      }
+      },
     },
     value: [String, Number, Boolean, Array],
     label: String,
     errors: {
       type: Array,
-      default: () => []
+      default: () => [],
     }
   },
   data() {
     return {
-      selected: this.value
+      selected: this.value,
     }
   },
   watch: {
     selected(selected) {
       this.$emit('input', selected)
-    }
+    },
   },
   methods: {
     focus() {
@@ -41,7 +41,7 @@ export default {
     },
     select() {
       this.$refs.input.select()
-    }
-  }
+    },
+  },
 }
 </script>
