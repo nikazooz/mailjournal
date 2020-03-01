@@ -29,7 +29,7 @@ class QuestionsController extends Controller
                 'timezone' => $question->timezone,
                 'enabled' => $question->enabled,
             ],
-            'entries' => $question->entries()->paginate(20, ['*'], 'entries_page')->transform(function ($entry) {
+            'entries' => $question->entries()->latest()->paginate(20, ['*'], 'entries_page')->transform(function ($entry) {
                 return [
                     'id' => $entry->id,
                     'reply' => Str::limit(strip_tags((string) $entry->sanitizedBody())),
