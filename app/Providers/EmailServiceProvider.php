@@ -27,7 +27,7 @@ class EmailServiceProvider extends ServiceProvider implements DeferrableProvider
         });
 
         $this->app->bind(FakeClient::class, function ($app) {
-            return new FakeClient(new InboundEmailFactory($app['swift.mailer']));
+            return new FakeClient(new InboundEmailFactory($app['config']['mail.inbound.address']));
         });
     }
 

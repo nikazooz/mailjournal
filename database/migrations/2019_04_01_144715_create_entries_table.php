@@ -14,7 +14,7 @@ class CreateEntriesTable extends Migration
     public function up()
     {
         Schema::create('entries', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('question_id');
             $table->text('message')->nullable();
             $table->string('message_id', 50)->unique();
