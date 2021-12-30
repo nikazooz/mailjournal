@@ -127,7 +127,7 @@ class InboundEmail
     public function message(): MimeMessage
     {
         if (! $this->mimeMessage) {
-            $this->mimeMessage = MimeMessage::from($this->message);
+            $this->mimeMessage = MimeMessage::from($this->message, true);
         }
 
         return $this->mimeMessage;

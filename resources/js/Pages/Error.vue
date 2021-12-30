@@ -1,31 +1,34 @@
 <template>
   <div class="error-page">
-    <div class="code">{{ code }}</div>
+    <Head :title="title" />
+    <div class="code">{{ status }}</div>
     <div class="message">{{ message }}</div>
   </div>
 </template>
 
 <script>
+import { Head } from '@inertiajs/inertia-vue'
+
 export default {
+  component: {
+    Head
+  },
+
+  props: {
+    status: Number,
+    message: String,
+  },
   computed: {
-    code() {
-      return this.$page.code
+    title() {
+      return `${this.status}: ${this.message}`
     },
-    message() {
-      return this.$page.message
-    }
-  },
-  watch: {
-    code() {
-      this.updatePageTitle(this.message)
-    },
-  },
-  mounted() {
-    this.updatePageTitle(this.message)
-  },
-  methods: {
-    updatePageTitle(title) {
-      document.title = title ? `${title} | ${this.$page.app.name}` : this.$page.app.name
+    description() {
+      return {
+        503: 'Sorry, we are doing some maintenance. Please check back soon.',
+        500: 'Whoops, something went wrong on our servers.',
+        404: 'Sorry, the page you are looking for could not be found.',
+        403: 'Sorry, you are forbidden from accessing this page.',
+      }[this.status]
     },
   },
 }

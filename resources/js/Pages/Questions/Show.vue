@@ -1,7 +1,7 @@
 <template>
-  <layout :title="question.name">
+  <Layout :title="question.name">
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-green-400 hover:text-green-600" :href="route('questions')">Questions</inertia-link>
+      <Link class="text-green-400 hover:text-green-600" :href="route('questions')">Questions</Link>
       <span class="text-green-400 font-medium">/</span>
       {{ question.id }}
     </h1>
@@ -28,7 +28,7 @@
       </div>
       <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex items-center">
         <button class="text-red-500 hover:underline" tabindex="-1" type="button" @click="destroy">Delete</button>
-        <inertia-link :href="route('questions.edit', question.id)" class="btn-green ml-auto">Edit</inertia-link>
+        <Link :href="route('questions.edit', question.id)" class="btn-green ml-auto">Edit</Link>
       </div>
     </div>
     <h2 class="mt-12 font-bold text-2xl">Replies</h2>
@@ -48,32 +48,33 @@
           </tr>
           <tr v-for="entry in entries.data" v-else :key="entry.id" class="hover:bg-gray-200 focus-within:bg-gray-200">
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
+              <Link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
                 {{ entry.question_sent_at | formatDatetime }}
-              </inertia-link>
+              </Link>
             </td>
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1" v-html="entry.reply" />
+              <Link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1" v-html="entry.reply" />
             </td>
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
+              <Link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
                 {{ entry.replied_at | formatDatetime }}
-              </inertia-link>
+              </Link>
             </td>
             <td class="border-t w-px">
-              <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
+              <Link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-500" />
-              </inertia-link>
+              </Link>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <pagination :links="entries.links" />
-  </layout>
+  </Layout>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import cronstrue from 'cronstrue'
 import Icon from '@/Shared/Icon'
 import Layout from '@/Shared/Layout'
@@ -83,6 +84,7 @@ export default {
   components: {
     Icon,
     Layout,
+    Link,
     Pagination,
   },
   props: {

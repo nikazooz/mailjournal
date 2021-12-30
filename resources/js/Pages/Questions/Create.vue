@@ -1,42 +1,44 @@
 <template>
-  <layout title="Create Question">
+  <Layout title="Create Question">
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-green-400 hover:text-green-600" :href="route('questions')">Questions</inertia-link>
+      <Link class="text-green-400 hover:text-green-600" :href="route('questions')">Questions</Link>
 
       <span class="text-green-400 font-medium">/</span> Create
     </h1>
     <div class="bg-white rounded shadow overflow-hidden max-w-lg">
       <form @submit.prevent="submit">
         <div class="p-8 flex flex-wrap">
-          <text-input v-model="form.message" class="mb-8 w-full" :errors="errors.message" label="Message" />
+          <TextInput v-model="form.message" class="mb-8 w-full" :error="form.errors.message" label="Message" />
 
-          <cron-input v-model="form.expression" class="mb-8 w-full" :errors="errors.expression" label="Recurrence" />
+          <CronInput v-model="form.expression" class="mb-8 w-full" :error="form.errors.expression" label="Recurrence" />
 
-          <select-input v-model="form.timezone" class="w-full" :errors="errors.timezone" label="Timezone">
+          <SelectInput v-model="form.timezone" class="w-full" :error="form.errors.timezone" label="Timezone">
             <option :value="null">Default</option>
             <option v-for="timezone in timezones" :key="timezone" :value="timezone">{{ timezone }}</option>
-          </select-input>
+          </SelectInput>
         </div>
         <div class="px-8 py-4 bg-gray-100 border-t border-gray-300 flex justify-end items-center">
-          <loading-button :loading="sending" class="btn-green" type="submit">Create Question</loading-button>
+          <LoadingButton :loading="form.processing" class="btn-green" type="submit">Create Question</LoadingButton>
         </div>
       </form>
     </div>
-  </layout>
+  </Layout>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
+import CronInput from '@/Shared/CronInput'
 import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
-import CronInput from '@/Shared/CronInput'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 
 export default {
   components: {
-    Layout,
-    LoadingButton,
     CronInput,
+    Layout,
+    Link,
+    LoadingButton,
     SelectInput,
     TextInput,
   },
@@ -50,29 +52,17 @@ export default {
   remember: 'form',
   data() {
     return {
-      sending: false,
-      form: {
+      form: this.$inertia.form('question', {
         message: null,
         expression: '0 0 * * *',
         timezone: null,
         enabled: true,
-      },
+      }),
     }
-  },
-  watch: {
-    form: {
-      deep: true,
-      handler(form) {
-        return this.$inertia.remember(form, 'question')
-      },
-    },
   },
   methods: {
     submit() {
-      this.sending = true
-      this.$inertia.post(this.route('questions.store'), this.form).then(() => {
-        this.sending = false
-      })
+      this.form.post(this.route('questions.store'))
     },
   },
 }

@@ -1,9 +1,9 @@
 <template>
-  <layout :title="`Entry #${entry.id}`">
+  <Layout :title="`Entry #${entry.id}`">
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-green-400 hover:text-green-600" :href="route('questions')">Questions</inertia-link>
+      <Link class="text-green-400 hover:text-green-600" :href="route('questions')">Questions</Link>
       <span class="text-green-400 font-medium">/</span>
-      <inertia-link class="text-green-400 hover:text-green-600" :href="route('questions.show', entry.question_id)">{{ entry.question_id }}</inertia-link>
+      <Link class="text-green-400 hover:text-green-600" :href="route('questions.show', entry.question_id)">{{ entry.question_id }}</Link>
       <span class="text-green-400 font-medium">/</span>
       Entries
       <span class="text-green-400 font-medium">/</span>
@@ -26,15 +26,17 @@
         </div>
       </div>
     </div>
-  </layout>
+  </Layout>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import Layout from '@/Shared/Layout'
 
 export default {
   components: {
     Layout,
+    Link,
   },
   props: {
     entry: {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Question;
+use App\Models\Question;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;

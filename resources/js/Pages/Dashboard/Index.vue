@@ -1,5 +1,5 @@
 <template>
-  <layout title="Dashboard">
+  <Layout title="Dashboard">
     <div v-if="status" class="bg-blue-100 border-l-4 border-blue-400 text-blue-700 p-4 mb-8" role="alert">
       <p>{{ status }}</p>
     </div>
@@ -11,7 +11,7 @@
     <h2 v-if="entries.length" class="mb-8 font-bold text-3xl">Latest Entries</h2>
 
     <div v-if="entries.length" class="mt-6 bg-white rounded shadow overflow-x-auto">
-      <table class="w-full whitespace-no-wrap">
+      <table class="w-full whitespace-nowrap">
         <thead>
           <tr class="text-left font-bold">
             <th class="px-6 pt-6 pb-4">Question Sent At</th>
@@ -37,25 +37,27 @@
             <td class="border-t px-6 py-4">{{ entry.replied_at | formatDatetime }}</td>
 
             <td class="border-t w-px">
-              <inertia-link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
-                <icon name="cheveron-right" class="block w-6 h-6 fill-gray-500" />
-              </inertia-link>
+              <Link class="px-6 py-4 flex items-center" :href="route('entries.show', entry.id)" tabindex="-1">
+                <Icon name="cheveron-right" class="block w-6 h-6 fill-gray-500" />
+              </Link>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  </layout>
+  </Layout>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import Layout from '@/Shared/Layout'
 import Icon from '@/Shared/Icon'
 
 export default {
   components: {
-    Layout,
     Icon,
+    Layout,
+    Link,
   },
   props: {
     entries: Array,

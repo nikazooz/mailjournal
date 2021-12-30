@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Question;
+use App\Models\Question;
 use Tests\TestCase;
 use App\Mail\QuestionEmail;
 use Illuminate\Support\Facades\Date;
@@ -57,9 +57,9 @@ class SendScheduledQuestionsTest extends TestCase
     {
         Date::setTestNow(Date::createFromFormat('Y-m-d H:i', '2019-08-28 10:00')->setTimezone('UTC'));
 
-        $question1 = tap(factory(Question::class)->make(['timezone' => 'UTC'])->daily()->at('13:00'))->save();
-        $question2 = tap(factory(Question::class)->make(['timezone' => 'CET'])->daily()->at('14:00'))->save();
-        $question3 = tap(factory(Question::class)->make(['timezone' => 'CET'])->daily()->at('15:00'))->save();
+        $question1 = tap(Question::factory()->make(['timezone' => 'UTC'])->daily()->at('13:00'))->save();
+        $question2 = tap(Question::factory()->make(['timezone' => 'CET'])->daily()->at('14:00'))->save();
+        $question3 = tap(Question::factory()->make(['timezone' => 'CET'])->daily()->at('15:00'))->save();
 
         Date::setTestNow(Date::createFromFormat('Y-m-d H:i', '2019-08-28 13:00')->setTimezone('UTC'));
 
@@ -106,6 +106,6 @@ class SendScheduledQuestionsTest extends TestCase
 
     protected function createQuestion()
     {
-        return tap(factory(Question::class)->make()->daily()->at('13:00'))->save();
+        return tap(Question::factory()->make()->daily()->at('13:00'))->save();
     }
 }

@@ -8,15 +8,15 @@
         <div style="position: fixed; top: 0; right: 0; left: 0; bottom: 0; z-index: 99998;" @click="toggle" />
         <div ref="dropdown" style="position: absolute; z-index: 99999;" @click.stop>
           <div class="mt-2 px-4 py-6 w-screen shadow-lg bg-white rounded" style="max-width: 300px;">
-            <select-input v-model="daysOfWeek" class="mb-4" label="Days of Week" multiple>
+            <SelectInput v-model="daysOfWeek" class="mb-4" label="Days of Week" multiple>
               <option v-for="(label,value) in weekdays" :value="value" :key="value">{{ label }}</option>
-            </select-input>
+            </SelectInput>
 
-            <select-input v-model="dayOfMonth" class="mb-4" label="Day of the Month">
+            <SelectInput v-model="dayOfMonth" class="mb-4" label="Day of the Month">
               <option v-for="(label,value) in monthdays" :value="value" :key="value">{{ label }}</option>
-            </select-input>
+            </SelectInput>
 
-            <text-input v-model="time" type="time" label="Time" placeholder="f.e. 23:30"></text-input>
+            <TextInput v-model="time" type="time" label="Time" placeholder="f.e. 23:30" />
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ export default {
     id: {
       type: String,
       default() {
-        return `text-input-${this._uid}`
+        return `TextInput-${this._uid}`
       },
     },
     type: {
@@ -117,9 +117,14 @@ export default {
         this.$nextTick(() => {
           this.popper = createPopper(this.$el, this.$refs.dropdown, {
             placement: this.placement,
-            modifiers: {
-              preventOverflow: { boundariesElement: this.boundary },
-            },
+            modifiers: [
+              {
+                name: 'preventOverflow',
+                options: {
+                  boundary: this.boundary,
+                }
+              },
+            ],
           })
         })
       } else if (this.popper) {

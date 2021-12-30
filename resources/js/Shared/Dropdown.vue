@@ -37,9 +37,14 @@ export default {
         this.$nextTick(() => {
           this.popper = createPopper(this.$el, this.$refs.dropdown, {
             placement: this.placement,
-            modifiers: {
-              preventOverflow: { boundariesElement: this.boundary },
-            },
+            modifiers: [
+              {
+                name: 'preventOverflow',
+                options: {
+                  boundary: this.boundary,
+                },
+              },
+            ],
           })
         })
       } else if (this.popper) {

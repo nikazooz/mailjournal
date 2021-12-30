@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Contracts\HasTimezonePreference;
 use Illuminate\Notifications\Notifiable;
@@ -8,11 +8,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable implements HasLocalePreference,
                                               HasTimezonePreference,
                                               MustVerifyEmail
 {
+    use HasFactory;
     use Notifiable;
 
     /**

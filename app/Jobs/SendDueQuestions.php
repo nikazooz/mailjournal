@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Question;
+use App\Models\Question;
 use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;

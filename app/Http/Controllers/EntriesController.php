@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Entry;
+use App\Models\Entry;
 use Inertia\Inertia;
 
 class EntriesController extends Controller

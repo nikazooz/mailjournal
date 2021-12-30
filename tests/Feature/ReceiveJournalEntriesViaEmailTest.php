@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\User;
-use App\Question;
+use App\Models\User;
+use App\Models\Question;
 use Tests\TestCase;
 use App\Mail\QuestionEmail;
 use Illuminate\Support\Facades\Mail;
@@ -41,9 +41,9 @@ class ReceiveJournalEntriesViaEmailTest extends TestCase
      */
     private function createQuestion()
     {
-        return factory(Question::class)->create([
+        return Question::factory()->create([
             'message' => 'Test question?',
-            'user_id' => factory(User::class)->create([
+            'user_id' => User::factory()->create([
                 'email' => 'john@example.com',
             ])->id,
         ]);

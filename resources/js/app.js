@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { InertiaApp } from '@inertiajs/inertia-vue'
+import { createInertiaApp } from '@inertiajs/inertia-vue'
 import PortalVue from 'portal-vue'
 import dayjs from 'dayjs'
 
@@ -11,7 +11,7 @@ if (process.env.MIX_APP_ENV === 'production') {
     Vue.config.silent = true
 }
 
-Vue.mixin({ methods: { route: (...args) => window.route(...args).url() } })
+Vue.mixin({ methods: { route: window.route } })
 
 Vue.filter('formatDatetime', (datetime, format = 'MMMM D, YYYY HH:mm') => {
    const dayObj = dayjs(datetime)
@@ -19,16 +19,14 @@ Vue.filter('formatDatetime', (datetime, format = 'MMMM D, YYYY HH:mm') => {
    return dayObj.isValid() ? dayObj.format(format) : ''
 })
 
-Vue.use(InertiaApp)
 Vue.use(PortalVue)
 
-let app = document.getElementById('app')
-
-new Vue({
-  render: h => h(InertiaApp, {
-    props: {
-      initialPage: JSON.parse(app.dataset.page),
-      resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
-    },
-  })
-}).$mount(app)
+createInertiaApp({
+  title: title => title ? `${title} | MailJournal` : 'MailJournal',
+  resolve: name => import(`@/Pages/${name}`).then(module => module.default),
+  setup({ el, App, props }) {
+    new Vue({
+      render: h => h(App, props),
+    }).$mount(el)
+  },
+})

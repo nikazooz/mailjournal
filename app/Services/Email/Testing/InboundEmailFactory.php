@@ -47,7 +47,7 @@ class InboundEmailFactory
         }
 
         if (isset($attributes['in-reply-to'])) {
-            $message->getHeaders()->addIdHeader('In-Reply-To', $attributes['in-reply-to']);
+            $message->getHeaders()->addHeader('In-Reply-To', $attributes['in-reply-to']);
         }
 
         $message->getHeaders()->addIdHeader('Message-Id', Str::random().'@swift.generated');

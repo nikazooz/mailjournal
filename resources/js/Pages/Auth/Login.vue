@@ -1,5 +1,5 @@
 <template>
-  <auth-layout title="Login">
+  <AuthLayout title="Login">
     <div class="block mx-auto w-full max-w-xs text-white text-4xl text-center font-bold" scope="heading">{{ appName }}</div>
 
     <form @submit.prevent="submit">
@@ -8,24 +8,24 @@
 
         <div class="mx-auto mt-6 w-24 border-b-2" />
 
-        <text-input
+        <TextInput
           v-model="form.email"
           type="email"
           name="email"
           class="mt-10"
           label="Email"
-          :errors="errors.email"
+          :error="form.errors.email"
           autocapitalize="off"
           autofocus
         />
 
-        <text-input
+        <TextInput
           v-model="form.password"
           type="password"
           name="password"
           class="mt-6"
           label="Password"
-          :errors="errors.password"
+          :error="form.errors.password"
         />
 
         <label class="mt-6 select-none flex items-center" for="remember">
@@ -36,15 +36,16 @@
       </div>
 
       <div class="px-10 py-4 bg-gray-100 border-t border-gray-300 flex justify-between items-center">
-        <inertia-link class="hover:underline" tabindex="-1" :href="route('password.request')">Forget password?</inertia-link>
+        <Link class="hover:underline" tabindex="-1" :href="route('password.request')">Forget password?</Link>
 
-        <loading-button :loading="sending" class="btn-green" type="submit">Login</loading-button>
+        <LoadingButton :loading="form.processing" class="btn-green" type="submit">Login</LoadingButton>
       </div>
     </form>
-  </auth-layout>
+  </AuthLayout>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import AuthLayout from '@/Shared/AuthLayout'
 import LoadingButton from '@/Shared/LoadingButton'
 import TextInput from '@/Shared/TextInput'
@@ -52,33 +53,27 @@ import TextInput from '@/Shared/TextInput'
 export default {
   components: {
     AuthLayout,
+    Link,
     LoadingButton,
     TextInput,
   },
-  props: {
-    errors: Object,
-  },
   data() {
     return {
-      sending: false,
-      form: {
+      form: this.$inertia.form({
         email: null,
         password: null,
         remember: null,
-      },
+      }),
     }
   },
   computed: {
     appName() {
-      return this.$page.app.name
+      return this.$page.props.app.name
     },
   },
   methods: {
     submit() {
-      this.sending = true
-      this.$inertia.post(this.route('login'), this.form).then(() => {
-        this.sending = false
-      })
+      this.form.post(this.route('login'))
     },
   },
 }

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Question;
+use App\Models\User;
+use App\Models\Question;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 

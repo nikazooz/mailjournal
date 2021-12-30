@@ -1,26 +1,28 @@
 <template>
   <div>
     <div class="mb-4">
-      <inertia-link class="flex items-center group py-3" :href="route('dashboard')">
+      <Link class="flex items-center group py-3" :href="route('dashboard')">
         <icon name="dashboard" class="w-4 h-4 mr-2" :class="isUrl('dashboard') ? 'fill-white' : 'fill-green-400 group-hover:fill-white'" />
         <div :class="isUrl('dashboard') ? 'text-white' : 'text-green-300 group-hover:text-white'">Dashboard</div>
-      </inertia-link>
+      </Link>
     </div>
     <div class="mb-4">
-      <inertia-link class="flex items-center group py-3" :href="route('questions')">
+      <Link class="flex items-center group py-3" :href="route('questions')">
         <icon name="book" class="w-4 h-4 mr-2" :class="isUrl('questions') || isUrl('entries') ? 'fill-white' : 'fill-green-400 group-hover:fill-white'" />
         <div :class="isUrl('questions') || isUrl('entries') ? 'text-white' : 'text-green-300 group-hover:text-white'">Questions</div>
-      </inertia-link>
+      </Link>
     </div>
   </div>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import Icon from '@/Shared/Icon'
 
 export default {
   components: {
     Icon,
+    Link,
   },
   methods: {
     isUrl(...urls) {

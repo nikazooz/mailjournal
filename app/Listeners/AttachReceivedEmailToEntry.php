@@ -2,10 +2,9 @@
 
 namespace App\Listeners;
 
-use App\User;
-use App\Entry;
+use App\Models\User;
+use App\Models\Entry;
 use App\Events\EmailReceived;
-use App\Services\Email\InboundEmail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

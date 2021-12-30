@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\User;
+use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -23,7 +23,7 @@ class DefineScheduledQuestionTest extends TestCase
      */
     public function correct_view_is_presented_for_creating_questions()
     {
-        $this->actingAs(factory(User::class)->create())
+        $this->actingAs(User::factory()->create())
              ->get('/questions/create')
              ->assertViewIs('app')
              ->assertViewHas('page', function ($page) {
@@ -50,16 +50,17 @@ class DefineScheduledQuestionTest extends TestCase
      */
     public function authenticated_user_can_schedule_question_to_be_sent()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->post('/questions', $this->validParams())
-            ->assertRedirect();
+            ->assertRedirect()
+            ->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('questions', $this->validParams([
             'user_id' => $user->id,
             'message' => 'Test question?',
-            'expression' => '0 19 1/1 * *',
+            'expression' => '0 19 1-31/1 * *',
             'timezone' => 'Europe/Belgrade',
         ]));
     }
@@ -68,7 +69,7 @@ class DefineScheduledQuestionTest extends TestCase
     {
         return array_merge([
             'message' => 'Test question?',
-            'expression' => '0 19 1/1 * *', // Every day at 19:00
+            'expression' => '0 19 1-31/1 * *', // Every day at 19:00
             'timezone' => 'Europe/Belgrade',
         ], $overrides);
     }

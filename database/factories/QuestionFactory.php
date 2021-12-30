@@ -1,14 +1,24 @@
 <?php
 
-use App\User;
-use App\Question;
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(Question::class, function (Faker $faker) {
-    return [
-        'user_id' => factory(User::class),
-        'message' => $faker->sentence,
-        'expression' => '* * * * *',
-        'enabled' => true,
-    ];
-});
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class QuestionFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => User::factory(),
+            'message' => $this->faker->sentence(),
+            'expression' => '* * * * *',
+            'enabled' => true,
+        ];
+    }
+}

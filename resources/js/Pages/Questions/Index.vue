@@ -1,11 +1,11 @@
 <template>
-  <layout title="Questions">
+  <Layout title="Questions">
     <h1 class="mb-8 font-bold text-3xl">Questions</h1>
     <div class="mb-6 flex justify-between items-center">
-      <inertia-link class="btn-green" :href="route('questions.create')">
+      <Link class="btn-green" :href="route('questions.create')">
         <span>Create</span>
         <span class="hidden md:inline">Question</span>
-      </inertia-link>
+      </Link>
     </div>
     <div class="bg-white rounded shadow overflow-x-auto">
       <table class="w-full whitespace-no-wrap">
@@ -14,14 +14,14 @@
         </tr>
         <tr v-for="question in questions.data" :key="question.id" class="hover:bg-gray-200 focus-within:bg-gray-200">
           <td class="border-t">
-            <inertia-link class="px-6 py-4 flex items-center focus:text-green-500" :href="route('questions.show', question.id)">
+            <Link class="px-6 py-4 flex items-center focus:text-green-500" :href="route('questions.show', question.id)">
               {{ question.message }}
-            </inertia-link>
+            </Link>
           </td>
           <td class="border-t w-px">
-            <inertia-link class="px-4 flex items-center" :href="route('questions.show', question.id)" tabindex="-1">
+            <Link class="px-4 flex items-center" :href="route('questions.show', question.id)" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-500" />
-            </inertia-link>
+            </Link>
           </td>
         </tr>
         <tr v-if="questions.data.length === 0">
@@ -29,11 +29,12 @@
         </tr>
       </table>
     </div>
-    <pagination :links="questions.links" />
-  </layout>
+    <Pagination :links="questions.links" />
+  </Layout>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import Icon from '@/Shared/Icon'
 import Layout from '@/Shared/Layout'
 import Pagination from '@/Shared/Pagination'
@@ -42,6 +43,7 @@ export default {
   components: {
     Icon,
     Layout,
+    Link,
     Pagination,
   },
   props: {

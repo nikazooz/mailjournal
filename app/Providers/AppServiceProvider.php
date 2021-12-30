@@ -2,16 +2,12 @@
 
 namespace App\Providers;
 
-use Inertia\Inertia;
 use Cron\CronExpression;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\UrlWindow;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -25,24 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Inertia::share('app.name', Config::get('app.name'));
-        Inertia::share('errors', function () {
-            return Session::get('errors') ? Session::get('errors')->getBag('default')->getMessages() : (object) [];
-        });
-        Inertia::share('auth.user', function () {
-            if (Auth::user()) {
-                return [
-                    'id' => Auth::user()->id,
-                    'name' => Auth::user()->name,
-                    'email' => Auth::user()->email,
-                ];
-            }
-        });
-
-        Inertia::version(function () {
-            return md5_file(public_path('mix-manifest.json'));
-        });
-
         $this->registerLengthAwarePaginator();
     }
 

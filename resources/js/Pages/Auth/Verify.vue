@@ -1,5 +1,5 @@
 <template>
-  <auth-layout title="Verify Your Email Address">
+  <AuthLayout title="Verify Your Email Address">
     <div class="px-10 py-12">
       <h1 class="text-center font-bold text-3xl">Verify Your Email Address</h1>
 
@@ -12,18 +12,20 @@
       <div class="mt-10">
         Before proceeding, please check your email for a verification link.
 
-        If you did not receive the email <inertia-link :href="route('verification.resend')" class="text-green-500 hover:underline">click here to request another</inertia-link>.
+        If you did not receive the email <Link :href="route('verification.resend')" class="text-green-500 hover:underline">click here to request another</Link>.
       </div>
     </div>
-  </auth-layout>
+  </AuthLayout>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import AuthLayout from '@/Shared/AuthLayout'
 
 export default {
   components: {
     AuthLayout,
+    Link,
   },
   props: {
     resent: Boolean,

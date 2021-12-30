@@ -17,17 +17,20 @@ export default {
   props: {
     title: String,
   },
+
   watch: {
     title(title) {
       this.updatePageTitle(title)
     },
   },
+
   mounted() {
     this.updatePageTitle(this.title)
   },
+
   methods: {
     updatePageTitle(title) {
-      document.title = title ? `${title} | ${this.$page.app.name}` : this.$page.app.name
+      document.title = title ? `${title} | ${this.$page.props.app.name}` : this.$page.props.app.name
     },
   },
 }

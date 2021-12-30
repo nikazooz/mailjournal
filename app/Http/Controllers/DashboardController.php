@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Entry;
+use App\Models\Entry;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;

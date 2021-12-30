@@ -1,5 +1,5 @@
 .btn-green {
-  @apply px-6 py-3 rounded bg-green-700 text-white text-sm font-bold whitespace-no-wrap;
+  @apply px-6 py-3 rounded bg-green-700 text-white text-sm font-bold whitespace-nowrap;
 
   &:hover, &:focus { @apply bg-orange-500 }
 }
@@ -32,6 +32,3 @@
         transform: rotate(359deg);
     }
 }
-
-
-

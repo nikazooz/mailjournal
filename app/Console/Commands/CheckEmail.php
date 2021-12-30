@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Events\EmailReceived;
 use App\Services\Email\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
-use Facades\App\Service\Email\EmailInbox;
 
 class CheckEmail extends Command
 {

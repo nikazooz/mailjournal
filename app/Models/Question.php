@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use DateTimeInterface;
 use Cron\CronExpression;
 use App\Mail\QuestionEmail;
 use Carbon\CarbonInterface;
@@ -15,10 +14,12 @@ use App\Contracts\HasTimezonePreference;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Console\Scheduling\ManagesFrequencies;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Question extends Model implements HasTimezonePreference
 {
+    use HasFactory;
     use ManagesFrequencies;
 
      /**
