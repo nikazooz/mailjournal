@@ -15,7 +15,7 @@
         "@inertiajs/inertia-vue": "^0.1.2",
         "@popperjs/core": "^2.1.1",
         "autosize": "^4.0.2",
-        "axios": "^0.21.1",
+        "axios": "^0.21.2",
         "cronstrue": "^1.92.0",
         "cross-env": "^5.2.1",
         "dayjs": "^1.8.23",
