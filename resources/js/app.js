@@ -24,7 +24,9 @@ Vue.use(PortalVue)
 createInertiaApp({
   title: title => title ? `${title} | MailJournal` : 'MailJournal',
   resolve: name => import(`@/Pages/${name}`).then(module => module.default),
-  setup({ el, App, props }) {
+  setup({ el, App, props, plugin }) {
+    Vue.use(plugin)
+
     new Vue({
       render: h => h(App, props),
     }).$mount(el)
