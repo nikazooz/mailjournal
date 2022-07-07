@@ -1,11 +1,13 @@
+import '../css/app.css'
 import Vue from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue'
 import PortalVue from 'portal-vue'
 import dayjs from 'dayjs'
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 
 Vue.config.productionTip = false
 
-if (process.env.MIX_APP_ENV === 'production') {
+if (import.meta.env.VITE_APP_ENV === 'production') {
     Vue.config.devtools = false
     Vue.config.debug = false
     Vue.config.silent = true
@@ -23,7 +25,7 @@ Vue.use(PortalVue)
 
 createInertiaApp({
   title: title => title ? `${title} | MailJournal` : 'MailJournal',
-  resolve: name => import(`@/Pages/${name}`).then(module => module.default),
+  resolve: name => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
   setup({ el, App, props, plugin }) {
     Vue.use(plugin)
 

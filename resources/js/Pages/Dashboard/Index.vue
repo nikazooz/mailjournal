@@ -50,8 +50,8 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue'
-import Layout from '@/Shared/Layout'
-import Icon from '@/Shared/Icon'
+import Layout from '@/Shared/Layout.vue'
+import Icon from '@/Shared/Icon.vue'
 
 export default {
   components: {

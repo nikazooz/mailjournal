@@ -32,8 +32,8 @@ import dayjs from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
 import { createPopper } from '@popperjs/core'
 import cronstrue from 'cronstrue'
-import SelectInput from '@/Shared/SelectInput'
-import TextInput from '@/Shared/TextInput'
+import SelectInput from '@/Shared/SelectInput.vue'
+import TextInput from '@/Shared/TextInput.vue'
 
 dayjs.extend(weekday)
 

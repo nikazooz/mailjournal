@@ -27,11 +27,11 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue'
-import CronInput from '@/Shared/CronInput'
-import Layout from '@/Shared/Layout'
-import LoadingButton from '@/Shared/LoadingButton'
-import SelectInput from '@/Shared/SelectInput'
-import TextInput from '@/Shared/TextInput'
+import CronInput from '@/Shared/CronInput.vue'
+import Layout from '@/Shared/Layout.vue'
+import LoadingButton from '@/Shared/LoadingButton.vue'
+import SelectInput from '@/Shared/SelectInput.vue'
+import TextInput from '@/Shared/TextInput.vue'
 
 export default {
   components: {

@@ -20,7 +20,7 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue'
-import AuthLayout from '@/Shared/AuthLayout'
+import AuthLayout from '@/Shared/AuthLayout.vue'
 
 export default {
   components: {

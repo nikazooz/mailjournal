@@ -45,9 +45,9 @@
 
 <script>
 import { Head, Link } from '@inertiajs/inertia-vue'
-import Dropdown from '@/Shared/Dropdown'
-import Icon from '@/Shared/Icon'
-import MainMenu from '@/Shared/MainMenu'
+import Dropdown from '@/Shared/Dropdown.vue'
+import Icon from '@/Shared/Icon.vue'
+import MainMenu from '@/Shared/MainMenu.vue'
 
 export default {
   components: {

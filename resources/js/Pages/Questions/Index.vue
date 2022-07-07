@@ -4,7 +4,7 @@
     <div class="mb-6 flex justify-between items-center">
       <Link class="btn-green" :href="route('questions.create')">
         <span>Create</span>
-        <span class="hidden md:inline">Question</span>
+        <span class="hidden md:inline">&nbsp;Question</span>
       </Link>
     </div>
     <div class="bg-white rounded shadow overflow-x-auto">
@@ -35,9 +35,9 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue'
-import Icon from '@/Shared/Icon'
-import Layout from '@/Shared/Layout'
-import Pagination from '@/Shared/Pagination'
+import Icon from '@/Shared/Icon.vue'
+import Layout from '@/Shared/Layout.vue'
+import Pagination from '@/Shared/Pagination.vue'
 
 export default {
   components: {

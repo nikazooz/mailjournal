@@ -46,9 +46,9 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue'
-import AuthLayout from '@/Shared/AuthLayout'
-import LoadingButton from '@/Shared/LoadingButton'
-import TextInput from '@/Shared/TextInput'
+import AuthLayout from '@/Shared/AuthLayout.vue'
+import LoadingButton from '@/Shared/LoadingButton.vue'
+import TextInput from '@/Shared/TextInput.vue'
 
 export default {
   components: {

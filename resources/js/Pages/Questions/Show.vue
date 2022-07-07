@@ -76,9 +76,9 @@
 <script>
 import { Link } from '@inertiajs/inertia-vue'
 import cronstrue from 'cronstrue'
-import Icon from '@/Shared/Icon'
-import Layout from '@/Shared/Layout'
-import Pagination from '@/Shared/Pagination'
+import Icon from '@/Shared/Icon.vue'
+import Layout from '@/Shared/Layout.vue'
+import Pagination from '@/Shared/Pagination.vue'
 
 export default {
   components: {
