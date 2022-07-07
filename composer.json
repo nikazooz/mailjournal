@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.4.1",
         "inertiajs/inertia-laravel": "^0.5.4",
         "laminas/laminas-mail": "^2.15.1",
-        "laravel/framework": "^9.0",
+        "laravel/framework": "^9.19.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7.0",
         "laravel/ui": "^3.4.3",
